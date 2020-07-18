@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D">
+<head>
+  <title>Rotating Rigidbodies with PID Controllers - Robert Corponoi</title><meta name="gridsome:hash" content="bfa68b357b5f01a8bfa4031f701b6a6edabcb008"><meta data-vue-tag="ssr" charset="utf-8"><meta data-vue-tag="ssr" name="generator" content="Gridsome v0.7.14"><meta data-vue-tag="ssr" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta data-vue-tag="ssr" data-key="format-detection" name="format-detection" content="telephone=no"><meta data-vue-tag="ssr" data-key="description" name="description" content="My Blog"><meta data-vue-tag="ssr" name="description" content="Rotating your Rigidbodies can be a breeze with PID controllers"><link data-vue-tag="ssr" rel="icon" href="data:,"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.bd9c2d4c76737c8e645df615f326643d.png"><link rel="preload" href="/assets/css/0.styles.bab9cb2e.css" as="style"><link rel="preload" href="/assets/js/app.1cbbcecb.js" as="script"><link rel="preload" href="/assets/js/page--src-templates-post-vue.f4592877.js" as="script"><link rel="prefetch" href="/assets/js/page--node-modules-gridsome-app-pages-404-vue.b9ba6dcb.js"><link rel="prefetch" href="/assets/js/page--src-pages-contact-vue.6642eaa2.js"><link rel="prefetch" href="/assets/js/page--src-pages-index-vue.6616e9f1.js"><link rel="prefetch" href="/assets/js/page--src-templates-tag-vue.20731f46.js"><link rel="stylesheet" href="/assets/css/0.styles.bab9cb2e.css"><noscript data-vue-tag="ssr"><style>.g-image--loading{display:none;}</style></noscript>
+</head>
+<body >
+  <script>
+    // Add dark / light detection that runs before Vue.js load. Borrowed from overreacted.io
+    (function () {
+      window.__onThemeChange = function () { };
+      function setTheme(newTheme) {
+        window.__theme = newTheme;
+        preferredTheme = newTheme;
+        document.body.setAttribute('data-theme', newTheme);
+        window.__onThemeChange(newTheme);
+      }
+
+      var preferredTheme;
+      try {
+        preferredTheme = localStorage.getItem('theme');
+      } catch (err) { }
+
+      window.__setPreferredTheme = function (newTheme) {
+        setTheme(newTheme);
+        try {
+          localStorage.setItem('theme', newTheme);
+        } catch (err) { }
+      }
+
+      var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      darkQuery.addListener(function (e) {
+        window.__setPreferredTheme(e.matches ? 'dark' : 'light')
+      });
+
+      setTheme(preferredTheme || (darkQuery.matches ? 'dark' : 'light'));
+    })();
+  </script>
+  <div id="app" data-server-rendered="true"><nav class="navbar"><div class="container"><a href="/" class="navbar__logo">RC</a><span id="navbar-toggle" class="navbar__toggle"><div id="nav-icon" class="nav-icon"><div></div></div></span><ul id="navbar-main" class="navbar__main hide"><li><a href="/tag/godot" class="navbar__links">Godot</a></li><li><a href="/tag/unity" class="navbar__links">Unity</a></li><li><a href="/contact" class="navbar__links">Let's Work Together</a></li></ul></div></nav><div class="header"><button role="button" aria-label="Toggle dark/light" class="toggle-theme"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div><main class="main"><div class="post container"><div class="post__header"><h1 class="post__title">Rotating Rigidbodies with PID Controllers</h1><div class="post-meta post__meta">
+  Committed 8. July 2020.
+  <strong>12 min parse.</strong></div><img alt="Cover image" src="data:image/svg+xml,%3csvg fill='none' viewBox='0 0 860 378' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdefs%3e%3cfilter id='__svg-blur-26939c8d9c934742f0a2e84a153930c0'%3e%3cfeGaussianBlur in='SourceGraphic' stdDeviation='10'/%3e%3c/filter%3e%3c/defs%3e%3cimage x='0' y='0' filter='url(%23__svg-blur-26939c8d9c934742f0a2e84a153930c0)' width='860' height='378' xlink:href='data:image/png%3bbase64%2ciVBORw0KGgoAAAANSUhEUgAAAEAAAAAcCAYAAADRJblSAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAMv0lEQVRYw1VZXY/juBH0zliiRFKivi17PvZub3eTyyUX4HAJkBwS5CHISxAEyP//L0xVNeWZe2hYlm2RXV1d3U2f2rrNtNj0uW%2bG3DUpD%2b2YBz/ltd9wb9I9ftbjNbio1%2bhC7mhNhAX8PuizgHuts%2bvOdfisw/NSnvyYt/6SL/0tL3GFbXmOC%2b7PeQ6LrnlvifzOVd%2bZcH/A71LL9fucsC6f12PNKaZ8GZfct1HvuUbiWtw/9kofRjx7bCdcT3gG3095CXO%2bdGu%2bpS1/HC751NRNbgCAr%2bGENgwQHBfEws2SEx4yhBULLXCSAHQyX3t8P%2bJeFBh03Bdr8NkbANzcoMW3Ds6lW17xuvW7HOb9iWDL%2bRWf7QLpgs9XbJQbZ3A6GtfG87zzAtzWDwpAL2A67LlXgASCbDSj8wB578xu/ZqfhzWfvCMDPKJmm07cKJBRxB1Qw4/mbsNiA4ybwAKwI9pyHhswJjX2LBgBDWKJATAFizQBuI6vuqbzjNDoF4HCDRoA1/J%2bBvCDOQ%2bj461DwJwzEFoEovFlH1gnJIHAPfL7ZEASA2aBvMUpX7s5P/VLvsKeyAA%2byCzc6U3aEYAkFoxiRa80MCoyElww0MkaERGD6HTMTQUQKnvPzw8AFGmAQMfo5BF9UpVpsCLiGxwnMwjABek3%2bEEAcM0gZhlbGwENc3ad4JiCFxiw2Zh8BAt7J8hrMOeviPxTYgpYGpw63wlVIeo6c9IxnwalgXIJCBIIfsb0IBPoeAJQHXKPm/El6ncA7jrQGwPg7AwARPN4gHBRlJjrk/JzRZqA%2bvrOmkdqQNsr78kwPrup7JXvXeX0egSQe/FIEd6z4HQKFvVhw9pX5f4O6j8hBXaAAQakMGjjrbOctiiPxWFjwnAIiURyKOlhuXZsjr/1ZZPGgHeMkgCN5qRyHSYduAGU9c6OmcJIMHgPRuEUADDuz5w3M0BaYwSBKexw5Z4v7EwAgM%2b%2bMP/x/B0A32hg2Y49nHpQw8MJIVhyTc65VNLgEMV0zy3eJwtiHcUaXgvE%2bwbJqCix5Od8BtOK0abjCzTFhPAq8TMAFn1GllCwktIQTIPFsj9qy69AqLzWcmJGU5jh3%2blQCwGEFoABK565g1VXOX8TGBfYKbax0NWE5FDbWBw2upuTZqwCvVWDAkCn6lCEsGzkqCoqXyyr7WS5jkWZ51tCBGBbt1m58hZ5ApGQcgHfD/hdAHihIbWxLzjBa2NAKJrzBogrABg4TAOv0jjiNzMBwFpXgHylxiD9tgAGmPpb9JMvSq86bw56gUIhnPDQYAsXUGj9/btBC/oiVgTDGIVIlhQymiPSwdR%2bkyBeiuOkPOs%2bDeqPDUcBYWB4AYH98RqMJBDcS6s99nDaHHe1pYOrjj0EsWACmNSYWUDP9yp0Ui0tkeIm5XxjEY5YUAvUyEFaRdSNAV69QLRqoPy3MjrBweBMEPs2mWa0o7GAOqBKsIsFdN6anoMFs1UGpcCkiHd%2bhQasBgbAjLg2QAhAB6cB%2bLnV3ngtAEp1UCAg8Im9CIPBhqodSpVL2tOJjs4oDcw5ImoCEmV6f/YyVxY5WEDE1fjUhwFtpNM2baVJCqUMvWlJOhoiOH9LT%2bZ4oT2jPyr/R5W/AeLMJqzD/d5vAiE0k8wDiNYlscLXScHgnhz3WVmf0NQ1DK/OyqUZ9uQJRCdR9WCHABgCW95Z0T7EhY7WeFh9Zn5FvDp9drweeUggArswj2j7mJdhKp1alJhaGlhZZTVgCjD32enNyMMpbqL8AUJShJJKp7rQuOPZ6EQJRFvAAFBHKpCZ1AdLh077cXDcAQS%2bKh2cAeHboNfDCMiJkTZRGwuNrJQ4OU5EgwCQ848u9wGp0k1gxduCBJE0t5oM8XGtymMqjt%2bj35raX1JphZEKc2dADCVN2Per92f6sAts2Y5vMjlPjUDqUCClC%2b5gAQQazGnU1SLve6YK9t6gV0C3%2bN7xpmnNsM9TIIJ4gDnv72pan70Y4UpuHalgIhjuKfFehan%2bdL4HtVJrDZAiWTpJ0v%2bK7us67GLBbXiW80wDimwnAAws6zGSIp38pejAUjRhUfQJAAEZO5S1%2bSMcHhQUGVi4zzvYAh8YbTjcFqcbtu5NSQEKnDnu5WhUKvhcgeq1rJGzDq%2bKetGAwDyq7Tf3GlwASEB%2baI0BR8OU4ODX6zX/7iNqfRzz0/gMAG5qfph%2bny57/m6/lJ5hKCywxquDAB4A0Dy1AIz1iH6PFEnxClbgO2EsYh2N/o3pgXO1rn1rTPBy3q5PRncrG4w2kXUAowLdnXKeihoEBAGhPlBs1hH528/63FLBlDdQdVtWgE4ssOEEjHlo8%2bd9yT9/uur3bHnJAlaEiTU5kW0f9P1RDLDKZABMpgFigrEgKFBFA6gFziqCaVZhrTsE0RUdaO%2bVwcABAKQ6WVAXZ6W0WNAVVjiZ6UJbdQKiEQuMOfyN7hWlJQAR6HJOHyCKCTRbujH/9OMPuUsJHViT//bpRZPYGJD/4SJdCHpeq5Z5uAPQ2TDUspeYCwNmMYIlkQygRTVNyUS8ftvvwUxVg/qdKNZvWnCqFH1TefthMDAqc6w6V/n8WFsK6HuN0iACKL5nqohiMBuqCICxYCQAAGUZx/yff/2S//abb/Wsv/zxa/7fLz/lP3/%2bLn%2b6cjTeymGJtcVsyJLv38RQzdSiasA%2bIDaLUtUXEFJc1BeoN1FPErRfqww2NB19wQHCIYgAoIazVPJJtCcQvFeJ8lYK6Shpa3rghTZRrx75wFoAkGJtcwDgEUWOwR6ljWNzmz%2bcTvmHywBHYz49PObff/85//uvP%2bZ/AoxP8xXCaCMwzwTEApTCkeOteoNVpTqxXIMxTIUgRhgT1Bu4VKjv3zVrQUInYT8XBiAgnH241%2bh9Pp0fq3utp%2bPUAgLByPIzGzSIqCk/U6ZBKlAXGvb/UldfyorDZryOqEj90QcBsERrbE4fPuQTgKA9PDzkZUXnN6b8aV/z3rMtJhM2OU3nJwxq1Iepu8JumPVpT9KAQxDpfGJDhbJ6aEF41yq7UqHYRjNYdD5ypmgb6NhkDKDR2eqxVsTbpitMKGwAIOfCiupc%2bgSg6UnPgDyNUfnPTpBzRYIATh4dJuyC/L8OcHDYAGB9B%2bC9sVa/zJwFykwQ5vt4vKbXvI3f5KV/QceKstk9AZwb2ABBRF9gIIwFlFmp0AdLCVU16gcctpJ%2bUL8toggGVHS8gFAVHWBTcX48GwCPrmiBAWDO10VErNHwoFMAA8aQrPwBiAm2RoheP%2bXbuMIuUP1NonQ4/qEw4uXlmn/48jH/6euXfFte8PvFIo8Sd5k/5evyBQBAKwDCRABQ9mgDQGBqUBQJSIKo9uwp0EE2tbFUjGDLzGYPQNWVu3eG0oCmjsU5AFHVdzBU9sgIRJxRr5QOriiq/ZgPYj21g0meyXGi7Gz4ABAzT27JgH6R82yCdnSBbJMPEAjmfsGEuE75v//4Of/9%2by9yZoxm6/AKUL4KALEAqUDjd5gWBIGRjxRKMIIdYssWnCzQlBhLGnhLAw1MbekPHPuARqjQqqoSEEKp9P2sEGdpQ/1WSu5tpSulzxdhsXOFnq2oOsEeI%2biAOdzO4i6Jtknwpjjlhw8Pv0oFH3z%2bw%2buWf3u5IZI7AIAmAIA1fVQqkP60ff0OOf%2bkDtEGJc4JawFgUo%2bgVtklNVBkAvfXSBOsyrXqBtEJHicqZu%2bBqEsn6OzsjU2EWsq3EkKFbZ2/T1ZB/xEw8jyFHWwO5/8B6Px2ncSayFHtX6YX/e/waz34oG5tnzESHwxIz3mB82bPoj7TQN2fZwrsYgCd75kOGqA27GkQ5dWk8WgMgLc6q4hvLGAfcBxkHgeOqgLnIoZCrBYAdnja2jF0a2Nz1IlNp%2bnPDlWse5u7Ve0sy9kcJgOA5/FgwRap%2bDYOv06vAOOSH1EWCQB1Z4qrqMroUwPEAND/On3G9UdVgiTHoQPhSSD0ftewxI6Rg9KcdqWB0qF0i66kgh2qjNbomQY0bweL71hwnKrwyKwPsbSPpdt7H3lnkWfZ4gHHGKyLYxMzsozh/Qr0%2bW/M3vHUlwBwEHrKz%2bNrfsUQc9E/UCmfHyop9oLcpvMLyp8YgNy/jp/zPn4LMF7UQVLwlu6jrlkNSHumAsdnTogEgEI4gClkAu/bFMkqYQB4pOjpOGdXe3icrpZDBILRd6DxsKhktI2Nvq0ajF7RjzpKQ81GDV%2bQ41dMYKlMgSNYMBOYyH%2bFFgFAZ3edBz5BC55QHfCK99d0Q3tsJ0UjR2SdFO35efo2v6xf4TyAGr7FzPANGPasUkg2DP4qRgRNk2uZE5j/sHowgeQYjhL6tH7BPi/wpYO/KJHY9/8Bgj0ABAkJf8EAAAAASUVORK5CYII=' /%3e%3c/svg%3e" width="860" data-src="/assets/static/main.07cc2b7.65aebe05b2b3a3b1d82aa1374ff65143.png" data-srcset="/assets/static/main.a67b0b2.65aebe05b2b3a3b1d82aa1374ff65143.png 480w, /assets/static/main.07cc2b7.65aebe05b2b3a3b1d82aa1374ff65143.png 860w" data-sizes="(max-width: 860px) 100vw, 860px" class="post__image g-image g-image--lazy g-image--loading"><noscript><img src="/assets/static/main.07cc2b7.65aebe05b2b3a3b1d82aa1374ff65143.png" class="post__image g-image g-image--loaded" width="860" alt="Cover image"></noscript></div><div class="post__content"><h2 id="what-is-a-pid-controller"><a href="#what-is-a-pid-controller" aria-hidden="true"><span class="icon icon-link"></span></a>What is a PID controller?</h2>
+<p>A PID controller is a type of control system that uses past values, current values, and estimated future values to drive a system towards a target value. We're going to create a PID controller and use it to drive a Rigidbody towards a desired angle.</p>
+<p>The inspiration for this article came about when I was doing research on the best ways to rotate a Rigidbody and I stumbled upon a <a href="https://forum.unity.com/threads/rigidbody-lookat-torque.146625/#post-1005645" target="_blank" rel="nofollow noopener noreferrer">forum post</a> that mentioned using a PID controller. The person also linked an example project which most of the code below is based off of and after I saw what it did I decided to learn more about PID controllers myself and eventually I decided to write this article to help the next person that stumbles upon this same scenario that wants a detail explanation and guide.</p>
+<p>I'd highly recommend checking out the above linked forum post but I'm going to go over the code and expand on it a bit in a more complex example that can also be found on my <a href="https://github.com/robertcorponoi/unity-pid-with-rigidbodies" target="_blank" rel="nofollow noopener noreferrer">Github</a>.</p>
+<p>Now for a quick overview of PID controllers:</p>
+<ul>
+<li>The P in PID is for proportional error. The proportional error is the flat amount that we are from the target. For example, let's say that your Rigidboy is at 50 degrees and the goal is 90 degrees. This would mean that the proportional error is 40 degrees since that''s the difference between the two. As with the other two values, this is also multiplied by a gain factor to control how much contribution it has to the overall output value.</li>
+<li>The I in PID is for the integral error. The integral error is a sum of the proportional values. An integral error can be helpful if you have an opposing force acting on your Rigidbody. Image a situation where you're trying to rotate your Rigidbody to a specified angle but there's force pushing the Rigidbody in the opposite direction. The force might not be big so your Rigidbody might get to 85 out of 90 degrees with just proportional errors but the opposing force is always pushing you back by 5 degrees and your Rigidbody will be stuck at 95 degrees. The integral error comes in handy here because it keeps a running total of proportional values and will apply a bigger output if the desired output is not being achieved.</li>
+<li>The D in PID is for the derative error. The derative error is used to provide a way of dampening the motion of the body. This is used to slow down the motion so that we don't have to do too much over/under correction.</li>
+<li>Each of the errors are multiplied by a constant, called a gain, before they are finally all added together and returned as the output. These gain values are used to control how much that error contributes to the overall output. For our example we'll just experiment with the gain values in the inspector as our use is not very complicated.</li>
+<li>If this seems like a bunch of mumbo jumbo it's ok because it was to me too but stick around for the examples as maybe it'll click in the context of Rigidbodies.</li>
+</ul>
+<h2 id="project-setup"><a href="#project-setup" aria-hidden="true"><span class="icon icon-link"></span></a>Project Setup</h2>
+<p>To set up the project for this article we're going to create a new 3D game add a spaceship model I got from a <a href="https://www.kenney.nl/assets/space-kit" target="_blank" rel="nofollow noopener noreferrer">Kenney</a> kit. Next we add a Rigidbody to the model which we'll apply the torque to.</p>
+<p>Now we need to create two scripts: <code>PID</code> and <code>ShipController</code>. The PID script is where we're going to put all of the logic while the ShipController is going to use the values output by the PID controller to rotate the ship.</p>
+<p>Let's open up the <code>PID</code> script and create the controller.</p>
+<h2 id="creating-the-pid-controller"><a href="#creating-the-pid-controller" aria-hidden="true"><span class="icon icon-link"></span></a>Creating the PID Controller</h2>
+<p>In the <code>PID</code> script we don't need to do anything on <code>Start</code> or <code>Update</code> so we can just delete those and we should be left with the following:</p>
+<pre class="language-cs"><code class="language-cs"><span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Generic</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// &lt;summary></span>
+<span class="token comment">/// A simple PID controller component class.</span>
+<span class="token comment">/// https://forum.unity.com/threads/rigidbody-lookat-torque.146625/#post-1005645</span>
+<span class="token comment">/// &lt;/summary></span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PID</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehaviour</span></span>
+<span class="token punctuation">{</span>
+<span class="token punctuation">}</span></code></pre>
+<p>The first thing we want to set up are the properties we need:</p>
+<ul>
+<li>We need the gain values discussed earlier, The proportional, integral, and derivative each need their own gain value. Values can be set to 0 to omit it from the final output (outside the scope of this tutorial).</li>
+<li>We need to set up the variables to track the current proportional, integral, and derative error values.</li>
+<li>We need to set up a variable to keep track of what the error was the last time the output was requested. This is used by the derivative error to calculate the rate of change.</li>
+</ul>
+<pre class="language-cs"><code class="language-cs"><span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">System<span class="token punctuation">.</span>Collections<span class="token punctuation">.</span>Generic</span><span class="token punctuation">;</span>
+<span class="token keyword">using</span> <span class="token namespace">UnityEngine</span><span class="token punctuation">;</span>
+
+<span class="token comment">/// &lt;summary></span>
+<span class="token comment">/// A simple PID controller component class.</span>
+<span class="token comment">/// https://forum.unity.com/threads/rigidbody-lookat-torque.146625/#post-1005645</span>
+<span class="token comment">/// &lt;/summary></span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">PID</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehaviour</span></span>
+<span class="token punctuation">{</span>
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// This is completely optional and is used just to help you idenfity what this PID</span>
+    <span class="token comment">/// script is for as you can use multiple PID scripts per game object to control</span>
+    <span class="token comment">/// various values.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">string</span></span> name<span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// The gain of the proportional error. This defines how much weight the proportional</span>
+    <span class="token comment">/// error has in the final output.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> Kp <span class="token operator">=</span> <span class="token number">1.0f</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// The gain of the integral error. This defines how much weight the integral</span>
+    <span class="token comment">/// error has in the final output.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> Ki <span class="token operator">=</span> <span class="token number">0.0f</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// The gain of the derivative error. This defines how much weight the derivative</span>
+    <span class="token comment">/// error has in the final output.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> Kd <span class="token operator">=</span> <span class="token number">0.1f</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// Tracks the current values of the proportional, integral, and derative errors.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">float</span></span> P<span class="token punctuation">,</span> I<span class="token punctuation">,</span> D<span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// Used to keep track of what the error value was the last time the output was requested.</span>
+    <span class="token comment">/// This is used by the derivative to calculate the rate of change.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">float</span></span> previousError<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Believe it or not we're almost done with our simple PID controller here. We just need to create the method that takes in the current error and calculates the output which we pass to <code>AddTorque</code> in the <code>ShipController</code> script.</p>
+<pre class="language-cs"><code class="language-cs"><span class="token comment">/// &lt;summary></span>
+<span class="token comment">/// Returns the amount of torque that should be applied to the ship this frame</span>
+<span class="token comment">/// to reach the target rotation.</span>
+<span class="token comment">/// &lt;/summary></span>
+<span class="token comment">/// &lt;returns></span>
+<span class="token comment">/// The output of the PID calculation.</span>
+<span class="token comment">/// &lt;/returns></span>
+<span class="token comment">/// &lt;param name="currentError">How far away the body is from the target rotation angle.&lt;/param></span>
+<span class="token comment">/// &lt;param name="deltaTime">The delta value from FixedUpdate.&lt;/param></span>
+<span class="token keyword">public</span> <span class="token return-type class-name"><span class="token keyword">float</span></span> <span class="token function">GetOutput</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">float</span></span> currentError<span class="token punctuation">,</span> <span class="token class-name"><span class="token keyword">float</span></span> deltaTime<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// First we set the proportional to how how far we are from the target value.</span>
+    P <span class="token operator">=</span> currentError<span class="token punctuation">;</span>
+
+    <span class="token comment">// Since the integral is the sum of the proportional error over time we have</span>
+    <span class="token comment">// to multiply the propertional by the delta time and then add it on to the</span>
+    <span class="token comment">// current I value.</span>
+    I <span class="token operator">+=</span> P <span class="token operator">*</span> deltaTime<span class="token punctuation">;</span>
+    
+    <span class="token comment">// Set the derative to the rate of change of error by subtracting the current</span>
+    <span class="token comment">// error from the previous error to get the difference and then dividing it by</span>
+    <span class="token comment">// the amount of time it took to get to this change.</span>
+    D <span class="token operator">=</span> <span class="token punctuation">(</span>P <span class="token operator">-</span> previousError<span class="token punctuation">)</span> <span class="token operator">/</span> deltaTime<span class="token punctuation">;</span>
+
+    <span class="token comment">// Now we set the previous error to the current error to prepare for the next</span>
+    <span class="token comment">// time the output is requested.</span>
+    previousError <span class="token operator">=</span> currentError<span class="token punctuation">;</span>
+    
+    <span class="token comment">// Finally calculate the output using the values above multiplied by their gain.</span>
+    <span class="token keyword">return</span> P<span class="token operator">*</span>Kp <span class="token operator">+</span> I<span class="token operator">*</span>Ki <span class="token operator">+</span> D<span class="token operator">*</span>Kd<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>And that's it for our PID class. If you're still a bit confused don't worry we still have example to get to. Also don't expect to fully understand PID controllers from this tutorial, but instead you should understand how to use them for tasks such as rotating Rigidbodies. If you really want to learn more about PID controllers there are great videos on the topic that helped me grasp the concept.</p>
+<h2 id="instancing-the-pid-script"><a href="#instancing-the-pid-script" aria-hidden="true"><span class="icon icon-link"></span></a>Instancing the PID Script</h2>
+<p>Next we're going to make the script that gets attached to our ship and controls the Rigidbody using the PID output but before that we should attach our PID script to the ship.</p>
+<p>So back out in the inspector we click on our ship game object and drag over the PID script twice. You read it right we need two instances of the PID class because we want to control the angle of the Rigidbody but also the angular velocity so that we can avoid abrupt changes to the angular velocity when applying the torque to change the angle.</p>
+<p>This is also where the <code>Name</code> property in the PID script comes in handy. We can better distinguish them by naming the first one "Angle Controller" and the second one "Angular Velocity Controller".</p>
+<p>We're going to leave the public variables alone for now until we set up our ship and have a working demo.</p>
+<h2 id="ship-controls"><a href="#ship-controls" aria-hidden="true"><span class="icon icon-link"></span></a>Ship Controls</h2>
+<p>Now to test our PID script we have to actually use it to change our ship's rotation.</p>
+<p>Same as before, open up the ShipController script and delete the <code>Start</code> and <code>Update</code> methods since we won't be using them and make sure you just have the following:</p>
+<pre class="language-cs"><code class="language-cs"><span class="token comment">/// &lt;summary></span>
+<span class="token comment">/// Used to control the ship and simulate the effects of the PID script.</span>
+<span class="token comment">/// &lt;/summary></span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ShipController</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehavious</span></span>
+<span class="token punctuation">{</span>
+<span class="token punctuation">}</span></code></pre>
+<p>First things we want to do here is set up the variables we'll need:</p>
+<ul>
+<li>We need a public variable that defines our turn speed. This will affect how fast we get to our final angle destination.</li>
+<li>We also need a public variable that defines the maximum angular velocity for our Rigidbody. This will help us avoid some crazy spins.</li>
+<li>Next we need a private variable that holds the current angle we want to rotate to.</li>
+<li>Also two more private variables, one for each of our scripts attached to the game object.</li>
+<li>Finally one more private variable that will hold the calculated torque to pass to <code>AddTorque</code>.</li>
+</ul>
+<pre class="language-cs"><code class="language-cs"><span class="token comment">/// &lt;summary></span>
+<span class="token comment">/// Used to control the ship and simulate the effects of the PID script.</span>
+<span class="token comment">/// &lt;/summary></span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ShipController</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">MonoBehavious</span></span>
+<span class="token punctuation">{</span>
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// The speed at which the ship will turn at.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> turnSpeed <span class="token operator">=</span> <span class="token number">500.0f</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// The maximum angular velocity of the Rigidbody.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">public</span> <span class="token class-name"><span class="token keyword">float</span></span> maxAngularVelocity <span class="token operator">=</span> <span class="token number">20.0f</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// The current angle to turn towards.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">private</span> <span class="token class-name"><span class="token keyword">float</span></span> targetAngle<span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// A reference to the PID instance for the angle.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">private</span> <span class="token class-name">PID</span> angleController<span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// A reference to the PID instance for the angular velocity.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">private</span> <span class="token class-name">PID</span> angularVelocityController<span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// The torque to apply to the Rigidbody.</span>
+    <span class="token comment">/// &lt;/summary></span>
+    <span class="token keyword">private</span> <span class="token class-name">Vector3</span> torque<span class="token punctuation">;</span>
+
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token comment">/// A reference to the Rigidbody component.</span>
+    <span class="token comment">/// &lt;summary></span>
+    <span class="token keyword">private</span> <span class="token class-name">Rigidbody</span> rb<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>When the ship is initialized we:</p>
+<ul>
+<li>Get the reference to the Rigidbody so we can get the angular velocity and apply the torque later.</li>
+<li>Get the references to both PID controller instances.</li>
+<li>Set the Rigidbody's max angular velocity to the value set by the user in the public variable.</li>
+<li>Set the initial target angle to the Rigidbody's Y Euler angle.</li>
+</ul>
+<pre class="language-cs"><code class="language-cs"><span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">Awake</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Get the reference to the Rigidbody which will be used when we apply the torque.</span>
+    rb <span class="token operator">=</span> gameObject<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetComponent</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>Rigidbody<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Get the references to the PID instances so we can use them as controllers.</span>
+    angleController <span class="token operator">=</span> gameObject<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetComponents</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>PID<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    angularVelocityController <span class="token operator">=</span> gameObject<span class="token punctuation">.</span><span class="token generic-method"><span class="token function">GetComponents</span><span class="token generic class-name"><span class="token punctuation">&lt;</span>PID<span class="token punctuation">></span></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// Set the maximum angular velocity of the Rigidbody and set the initial value of the</span>
+    <span class="token comment">// targetAngle to the Y Euler angle. We do this so that we can easily make adjustments</span>
+    <span class="token comment">// by just adding or subtracting from it.</span>
+    rb<span class="token punctuation">.</span><span class="token function">SetMaxAngularVelocity</span><span class="token punctuation">(</span>maxAngularVelocity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    targetAngle <span class="token operator">=</span> transform<span class="token punctuation">.</span>eulerAngles<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Now it's time for the fun stuff, the actual rotation and usage of the PID controllers. In the FixedUpdate we:</p>
+<ul>
+<li>Get the fixed delta time because we need to pass it to the PID controllers.</li>
+<li>Adjust the value of the <code>targetAngle</code> depending on the user input, the turn speed, and the fixed delta time.</li>
+<li>Get the angle error (the difference between our current angle and the angle we want to turn to) by using <code>DeltaAngle</code>. Then we pass this value to the <code>angleController</code> to get the torque that we should apply this frame.</li>
+<li>Get the negative of the angular velocity and pass this to the <code>angularVelocityController</code> to get the torque that we should apply this frame.</li>
+<li>Lastly add the two torques together and apply it to the Rigidbody.</li>
+</ul>
+<pre class="language-cs"><code class="language-cs"><span class="token return-type class-name"><span class="token keyword">void</span></span> <span class="token function">FixedUpdate</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Get the fixed update delta time.</span>
+    <span class="token class-name"><span class="token keyword">float</span></span> dt <span class="token operator">=</span> Time<span class="token punctuation">.</span>fixedDeltaTime<span class="token punctuation">;</span>
+
+    <span class="token comment">// So currently the targetAngle contains the current rotation of the ship.</span>
+    <span class="token comment">// Now we need to set the targetAngle to a combination of the user's horizontal</span>
+    <span class="token comment">// input, the turn speed, and fixed delta time.</span>
+    targetAngle <span class="token operator">+=</span> Input<span class="token punctuation">.</span><span class="token function">GetAxis</span><span class="token punctuation">(</span><span class="token string">"Horizontal"</span><span class="token punctuation">)</span> <span class="token operator">*</span> turnSpeed <span class="token operator">*</span> dt<span class="token punctuation">;</span>
+
+    <span class="token comment">// The angle controller drives the ship's angle towards the target angle.</span>
+    <span class="token comment">// This PID controller takes in the error between the ship's current rotation angle</span>
+    <span class="token comment">// and the target rotation angle as input, and returns a torque magnitude.</span>
+    <span class="token comment">// We use `DeltaAngle` to find the shortest difference between the two angles in degrees</span>
+    <span class="token comment">// which is what we need to pass to the PID controller.</span>
+    <span class="token class-name"><span class="token keyword">float</span></span> angleError <span class="token operator">=</span> Mathf<span class="token punctuation">.</span><span class="token function">DeltaAngle</span><span class="token punctuation">(</span>transform<span class="token punctuation">.</span>eulerAngles<span class="token punctuation">.</span>y<span class="token punctuation">,</span> targetAngle<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token class-name"><span class="token keyword">float</span></span> torqueCorrectionForAngle <span class="token operator">=</span> angleController<span class="token punctuation">.</span><span class="token function">GetOutput</span><span class="token punctuation">(</span>angleError<span class="token punctuation">,</span> dt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// The angular velocity controller drives the ship's angular velocity to 0.</span>
+    <span class="token comment">// This PID controller takes in the negated angular velocity of the ship and returns</span>
+    <span class="token comment">// a torque magnitude.</span>
+    <span class="token class-name"><span class="token keyword">float</span></span> angularVelocityError <span class="token operator">=</span> <span class="token operator">-</span>rb<span class="token punctuation">.</span>angularVelocity<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+	<span class="token class-name"><span class="token keyword">float</span></span> torqueCorrectionForAngularVelocity <span class="token operator">=</span> angularVelocityController<span class="token punctuation">.</span><span class="token function">GetOutput</span><span class="token punctuation">(</span>angularVelocityError<span class="token punctuation">,</span> dt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// The total torque from both controller is now applied to the ship. If the gains</span>
+    <span class="token comment">// are set correctly then the ship should rotate to the correct angle and stay there.</span>
+    torque <span class="token operator">=</span> transform<span class="token punctuation">.</span>up <span class="token operator">*</span> <span class="token punctuation">(</span>torqueCorrectionForAngle <span class="token operator">+</span> torqueCorrectionForAngularVelocity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	rb<span class="token punctuation">.</span><span class="token function">AddTorque</span><span class="token punctuation">(</span>torque<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>At this point you should add the <code>ShipController</code> script to the Ship GameObject and your ship should look something like this in the inspector:</p>
+<p><img class="g-image g-image--lazy g-image--loading" src="data:image/svg+xml,%3csvg fill='none' viewBox='0 0 552 876' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdefs%3e%3cfilter id='__svg-blur-13ea995394e0e8f435c565fd656a2942'%3e%3cfeGaussianBlur in='SourceGraphic' stdDeviation='40'/%3e%3c/filter%3e%3c/defs%3e%3cimage x='0' y='0' filter='url(%23__svg-blur-13ea995394e0e8f435c565fd656a2942)' width='552' height='876' xlink:href='data:image/png%3bbase64%2ciVBORw0KGgoAAAANSUhEUgAAAEAAAABmCAYAAAB7nJf1AAAACXBIWXMAAA7DAAAOwwHHb6hkAAASXElEQVR42tWc95MTxxLH919%2br1yUy/7B5bJd5QDPBBtjMBiwiUeGu4Pjko6TdIGLHEdyzjnH4od5%2brT8HbcWhZW0ko4funa0mt2Z6encPZuUy%2bVw5syZUCgUwuTkZCgWi2F6ejrcuHHD7s3OzoalpaUwNTUVjh49Go4dO/bYwvHjx8Nbb70VDh8%2bbPDOO%2b%2bEhIW%2b%2buqr4fz58%2bHNN980eOmll2yxtN99911DAEjhIX7z4OMKu3fvDvv37w8HDhwIR44cCcnNmzfD6upqWF5etoVCEfPz82FxcdGAe/QplUphfHw8TExMPFYAVXNlA2dmZoyqAX4DCQseHh4O165dC3Nzc7ZokKHFg4y1tbVw79698MEHH4T333//sQDm%2buDBA9vc27dv2zqgdtbLOhcWFirXckguX75s/AF5gCkWz46vrKwYwDevvfZaePvtt8Mvv/wSfv755wj87jX4sdoZ87fffgvff/99uHv3rl2h3n379oVdu3YZCwwPXwljY2MhgSzOnDkbhoZOh5GRkSCWAEQFYAvheOfOHcPm5uamwfr6ulFHp8DzGxsbdr1165a1AcZQmzH9uFz1bKt3swbmzprYeSiA9QLcZ22J%2bJsFTk5OWBtEwB%2bQCiB%2bATwPMRlNsBNggZAmVMf4erd4lgmzc6Ojo3FMJn///n1DRpYxoAAAFuY5ANaoUvlySNhlfgDi/aGhISOVixcvmhqETS5cuBAOHTpkZHT69GmTGeK1TuDDDz%2b0iSwszBsiQDya6ODBg%2bH1118PZ8%2betV3jHm3mcO7cOUPKxx9/3NbYXja89957dm9xccGoxIRguSIMyuXKblegXC5FgcGkAAkO2uwAv2mDnG6Bd7H7ugK8W%2bP5sTUuc2tnDD2rNlfeyVgJZDU1VYGZiTBWuF65We3AQmEFBpNxJEOJ//JYPJBlMe0u2APzhaWgWNrXr1%2bP6pD3Jizq2uhIuFSYC5dOHA8rCIcKK/An5IgGePnll8Ozzz4bdu7cGXbs2GGGExiVjdAJ8Gwr6Ka/ADI/efKksTRa7dSpUyYAWTeUnhh5VKBQWgylqUKYKxXtD5EkquLq1asGwiSCSeQksm0Fxmr/kDC/QXAzEJmKfFv1F8vqGc8q7LiEqig6UgANWODC%2bXNhrEIewxWyv3Tpki0cLNUjRfkJWYH%2bQiK7glRGkCEI6wH/sXMSwgjnRn09sFCEJYIcwaoxPvroIwO1uX7yySemScwXYGcxdJDw2MqQ%2bBtvvGGSnwl49SeQPm0F9AXjSHO0BzuEJMZQ%2bfHHH8NPP/1UA9zDkEFSnzhxwp6HAn744YdH%2bnrASMJh4xnGQEX7MfxYGgMEJVqMl/iSxCy%2bncU2Q4Koh92BF8XXjeSDyJ650F996z2je4wFEuBxjKBWY4AoswQhdXmCCD48JaiBXRMSOkWEpwDcbuQLu8vuNNrNX3/91fpgnvMOnmHX2OVmFMBYmO70h7x///33pmPABokEBPyGAYTExPDA7ZUa7BYBvAPhiQxgd%2bBPeLGeMcM9eBQZINUF1WQxfFgHc2YMzOFWYzCPRJOE3xkQsxOAPDwLtCP06glBvZuFffrppw2BXfn8889tcpJBmK/c479mzzIOz8Ay8HerMRDGiXbq4KGDYf%2bB/ab3If9udj1NATJzEYI4Pd9%2b%2b62RdD1A2EHO7BL9eQcmM/f4r9FzkDX8DwXD/19%2b%2baXd4xmB3q8xoJBETs5cqWIGF0tRV0ryeyfIO0XtABMTQmQD0G6m0z3yZX026y9keytVz/vfUuN6JpmoeICFigF07NLxMDQ8FGYKVUkKYDbKBKatuGG3yMgC3TyTvodNI49S9g2qn/8TGtdHx8Ley/vCE4e3heJcMayurIYbszfCU089FZ5%2b%2bunw3HPPhWeeeSbs3bs3vPDCC3b15mcWE1VtjJp%2bAeMhSzB/sW9gDdoIVRCDsEyk/4vlYjgzdjaUyv/aAuw6auXKlSsmwcEibSxFmbVZQaRfz6jqNdgmOwqW6jcWEDkPXxkO49fGrSO2vnhOyPDelQ9eZAHeDxLYDdRPN3GETmMPgNqMjwCMahBe2L1nd9i5a2fYs2ePxQjlAjfasXY1AWqVqIwMIB9bHAQwDzOE6u2WpHYealDvgZKwz1GDWwHYfYsJpp0h/Gb4vB6/eoOoHQRI4EBVmKCYqOwA10EAY//555/hs88%2b%2b9cURj1grUH%2byAFZghJi3ThGMobAeDdB1DwBKxCtkMhUZeFYUfjTXJH%2bWGKkyFAdmJid%2bgWiANTh119/bZbgN998Y9dBAGOTK0AYRlMYBJD7IyILO5A3IwrLfRKKQKeeoWQALPDVV18ZEgYJzAFEEJeILABA%2buhH2IE2sgH9LyrplAV4t4SgtM5WAMsNyihgp1955RXbeeICUAKOEWoRNujGLWYwLDOwjyzIS7vkATEiJPXnawPUCUroRi2KghCsearXXBCg9BM7T9IQO5%2boEDFB2lAAMsGnlzuhAHx0%2bA45wO9%2bm8P17B2uMSACr0sVKihC2hzALugGAVKDSlMDyjINCuSbRBmAykMOEBYjsooq1L10cUHaMMqqBVCnCFfCVvzGFPWh6n4B41UDpyv/%2bgIsliAksUAsQlgC4Qc7IAOEMR9cyEoN0gLSLlAb91FDBC%2bVEu8HaCy5y5EFmJgCl1KByAbPEiwAdqDdjmBUsRXvA5FKTDIO7NBtnUEnwBwsNSYWwPJD4BE4ABQil3/APQwlVKNPnWdBgGoNeIbYIFYlFifUxjsIUBLE7BcQGF1eXqqmx6WipAKZkKS0d4hkPKjdjmOkfulcopIfg9ACYuMEKc/uA6g97TzpMX6jDhFePsjYrgbQtVGccKBqUJOAP5HOAHwOmUKytLnXrRbYKobPI4YQQg6nB/VHCQwUoRCYroMi035AgiRmp0%2bdPmVqj7SYhFsr8tyqu9oOFSYSCOXZUpgvzcfIKYJOgRAFSH2NjQQnfbc6SKCrrfVxNQqYHJsM20/vCP898ERYmK%2bmlvlTFWGEwb2gRH1BKb6QaisCLIzFB4ujwtH7UDvzZt1mCk8XKmbu5EzYcfZ/4T%2bHnojVFezyiy%2b%2bGLZv324Lx1HCFnj%2b%2beftHr8V5VFdcSNQH/oD/l6vgc1k0Vi2jIkdwn2l3RMTdtQFlefD0sJSLCfjTzw4FRqovpY2V5XSZeVBucODcIRUO6S2L/VJ5O8T8sIGgFTQ%2b%2bwwWgHLDx/B593a0d%2byNLG/QSi7QYKi25R7p3o/Pe8aZwjeRh1CJiACjxBE4B12ExLj/Zid8i2Iyyu7tGUiQpCm9D7kgqcEr4hkO40DeGdIcmArhcViRAhyZ6cxfeUAURjpKyu7jQkSjvbqqJ20es8MIR8RYqLIA%2bUDUB/dZITSARGSERKgvg5YoNMqgPrpfpZCyazgCyViWJzIDxSAAEQGoPrg1zxK5ZQchZpUnkYgRMYW8gH24Kp4gbSR6guIKENBzUBxf/873Ye4JCkxNjqWyelAFOVxCD12H50PInwqvFME8H4WiJ8BEnivqA3A8eI/FswVwwthjBNGEAZg0gD%2bPKG0NHCfuAK1QSqmor/%2b05X7RKJU%2bB1ZgInI12fCvg4gjyJJ5AxXNIDKYTUxfjMxYnVcWQipdJ4BcbAOFIEcQYWygHrA%2bwm0KAsN5UBpOifggbHpFyNC7DqJEVWEowK7LZL0EWGKJGEx3sniyNKq%2bFEFkLqSQWbSzInNkDUHIniu3tkhnmHzsPhAkpKxkD3/pc8h1dQHeKEAptv197NSARTFLuqcEFd%2b64CWB2WnufqgaaP%2by/%2bU%2bDMeVKM6AChAxwJ9X65WI6TFgjl2nV1S/Uye4Sd2EK2CZBdCkAfU7H333XcREFLcozgSwawDTghk2DTd3wPvRYhD%2bvSFApAfsBbP8W4/BpSSyE5n8ceOV4/PQUrdWH7e/lcSQgVWRGQVa2SSCC143gP3yOHDzzzLglDTPFOvP/DFF1/Y/whYqEuUwFjwPP%2bnxwDJSTxhOTEZpiertj7YVo2gJur9a/nSqiFU2/dTZZZA/yHY/HsYqx6wcwrN6/3qrwyW76uDHBpXc/QxC/WRZrFzgxYPvD4elteWQ3mlenAK0gFz%2bPyoJCiB3dOk2A1eBLb5zX3IW6l1DaRTIr6kLl1e5/ukod3%2b9Z5BhjBf5gr7QYnSbtVDU4XpcG30Wli5txrKd%2bfC%2bup6uHuvqnaIDG/bts20Ao4SV2IBnCHivyeffNJMZniVe2gQ4gUcvsaQ0uHEdK2%2bjxPUiwt0eg6p3jiwHDYFJj7CT/EAKMPiAabvS8VQLpXD4vxCzWEJ1ejSWaEx2Qe%2bZtDX5CqPWO9kmd4tE9jvmED3s55FynpeSVpF89AYsVDSUl5XqykwLDCfwm5HI9Tra7nBCoI3NjfC/ELV69TBLO26fAD%2bg2p6nSNU%2bW6sEcIElaqC96WqOnF909rDnKEKAtburBsCrDK1Mp6ElASkEqeMi%2b7vZZ2gPhEQTWF2XRNHgAGSvDKTG9ULZqEIO2d4cyme5fPmafroO/d0zrdXwDgxNwhfIMioC1IECGFHZTjCjvhAs%2bRIK4tR8YDCTCHqdsxTb/6mTeJeQs2ZIU1cxolMYihAbOAPM/rCSQU3WxlM8geUmpaJOkjA0MIcjjFB1ATA7uMakyDFPOYebeSCaoZQibjO1A5lkRMgFgrAPsAub3ZirF9QQwFMEOF38tRJu%2bKf472xcBZLhAjtwH/Y2vxHWwcbs0Rk5WQheeE/zgEBjVzbPEDv92OpzRygxERmomV5ZmtL5P1BSn82V9EaxRGygISqLMd%2bgo7HqK1SHcAQMHJlJKzeWwvFzYoOXqxKahaIRYcwZLeJEEENsAc5BNogopMMT16WXlZLEIol5wEbYhWyiWxezAxNT02HpfWlsLK5YtagDBLInWgx/gDsAM%2bjJSQrlHuTEdMMRDnpIGivgfmh4rVwfS2HjYeik3hMbbpgJ8Z85FQT9eakoJ30VswLLCxGZGRBWl6gz4OoLSOINcWAiAm/ixfsCsnIFG50ZrAd01hFUhv3N%2bxQlsUHZ2%2bYMPIfOfHtvMG/F0NI30uKdoAXVgiJvENiUNH67VvGk8o6KSymICbteiGsXoCyVNEOgKcBqbhuSmPr2QFKhrAwqEHf%2bVGeQHFA%2bhOx1cGGXkHNgQkQgJDAyEHYIfh8XDAPBEhuYFAp28ziMY19pIZ5QKYcalCoK2%2boCYlpgkzCf0ihF6fG2GUWp3wAQUmf2OBKMkOx/3rx/LyAMcwQEgWw%2b%2bhKL%2bDypACF2eBxTGF9EqPRSfBegj6hUeMM6bB0L%2br6ZApL6A3aEXrEGYLfoQDl5/Iug/PnBtmB9FfpBnpyNJ0ezyMf0MgdBuPwda%2bDHVkAG8QCIqIAVCASOF0I3S2IArDAuIIE1BBSfpDAHOzYnAoecW6OHD1SEwtsFfbKmh2iL4YHqg7dj47v5/lBLdq347lBpcPxA2ZnZmu%2bxelT5L5aXAhq9/ueSr8r5tiPb4rKDVesUy65wFJjoyOj5g0WV4vVb4nMVUtSiPrg%2biIcVTKDpUiARMUT9WL7zbI2WfvmAYyF8CXaDYX7StGaAonxsfGwtFkxUe/Mh%2bWb1W%2bK8icxAGoGkA3EBXCDyQSRIcJi7CQeoGpRVYz2EhgDmaMPNXKPNvdlnSYxU1IqW7WoL5Ovfnl1ribD4jND7RYnFWeLPcv%2bNAN9LVdtH%2bmKMUGCHtjllytX2ml3uGOYKURsbz7YtMTIzD%2bmMepILrB3ib1rnIZOXeH0%2b%2bVtRkvQH5YEEWlvsJvzAnKHV26txI%2b0ql7IfwXWfw3W/9YVUIVHN8A7VJIXnSFygyye8BGOUd6%2bwNz8XFhbXTPfn53XZ3OVJ%2bDKbxbPDulTu0yYq2IEqC7vPLULKs7C6cIcjoYQLjACD0GHU5S3Owy2eSeaBIDa%2bM2idC4JNYVFqgQpGyILlf7EKJl8q89qtYKaT2n5mF2jvF9eprCiPQqAsMv6vrDAf2SZq/73pz7zOD3KXCwkJp2IeiPqm0dpbKPT4/okL23ejfkN6T98%2bDB%2bVOWPP/6IHzvx7bw/ovLXX39ZYCQKQaIxSP9eUoAisRJE/Kdixn6eH9Znuo0CtEPsfl61wc0%2bopLmQ9rE5/xn7/oBNTKACVImBxX0AgEKiQGUwhKXQwor5seVyfTr7DBjoRGiFgABsgHyjAang6IIOH1IXQkKZBD3VDPcL3ikVhj1h/OT92e0PAuoUAlWU0IWowsE/P3337Hmt9fAOAhYqLGmVrgXu%2b/fp4oyFVgMwi/wH3BnDv8HlcNvfMjMYgQAAAAASUVORK5CYII=' /%3e%3c/svg%3e" width="552" alt="Inspector" data-srcset="/assets/static/inspector.59bd7de.a1b8a8d45dbb07b1b3bca3a903d81c10.png 552w" data-sizes="(max-width: 552px) 100vw, 552px" data-src="/assets/static/inspector.59bd7de.a1b8a8d45dbb07b1b3bca3a903d81c10.png"><noscript><img class="g-image g-image--lazy g-image--loaded" src="/assets/static/inspector.59bd7de.a1b8a8d45dbb07b1b3bca3a903d81c10.png" width="552" alt="Inspector"></noscript></p>
+<h2 id="the-gain-values"><a href="#the-gain-values" aria-hidden="true"><span class="icon icon-link"></span></a>The Gain Values</h2>
+<p>Now we have to go back to the inspector and fill out the gains for both PID controllers. This can be done by running the scene and tweaking the values until you find a nice combination or you can use a set of values below highlighted by the forum poster:</p>
+<h3 id="critically-damped-controls"><a href="#critically-damped-controls" aria-hidden="true"><span class="icon icon-link"></span></a>Critically Damped Controls</h3>
+<p>These gain values result in a control system that's critically damped, or at least very close to it. This means that there is the smallest amount of oscillation, which is probably not even noticable. So in our example that means that when the ship is turned, it will stay where it is.</p>
+<p><strong>Angle Controller</strong></p>
+<table>
+<thead>
+<tr>
+<th>Gain</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kp</td>
+<td>9.244681</td>
+</tr>
+<tr>
+<td>Ki</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Kd</td>
+<td>0.06382979</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Angular Velocity Controller</strong></p>
+<table>
+<thead>
+<tr>
+<th>Gain</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kp</td>
+<td>33.7766</td>
+</tr>
+<tr>
+<td>Ki</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Kd</td>
+<td>0.2553191</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fast-controls"><a href="#fast-controls" aria-hidden="true"><span class="icon icon-link"></span></a>Fast Controls</h3>
+<p>These gain values result in a control system that has fast controls meaning that the turning is very responsive and quick in comparison to other gain values.</p>
+<p><strong>Angle Controller</strong></p>
+<table>
+<thead>
+<tr>
+<th>Gain</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kp</td>
+<td>33.51064</td>
+</tr>
+<tr>
+<td>Ki</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Kd</td>
+<td>0.02127661</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Angular Velocity Controller</strong></p>
+<table>
+<thead>
+<tr>
+<th>Gain</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kp</td>
+<td>46.54256</td>
+</tr>
+<tr>
+<td>Ki</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Kd</td>
+<td>0.1808511</td>
+</tr>
+</tbody>
+</table>
+<h3 id="spongy-controls"><a href="#spongy-controls" aria-hidden="true"><span class="icon icon-link"></span></a>Spongy Controls</h3>
+<p>These gain values result in a control system that has slow, less responsive controls.</p>
+<p><strong>Angle Controller</strong></p>
+<table>
+<thead>
+<tr>
+<th>Gain</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kp</td>
+<td>0.7093059</td>
+</tr>
+<tr>
+<td>Ki</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Kd</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Angular Velocity Controller</strong></p>
+<table>
+<thead>
+<tr>
+<th>Gain</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kp</td>
+<td>11.17021</td>
+</tr>
+<tr>
+<td>Ki</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Kd</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="springy-controls"><a href="#springy-controls" aria-hidden="true"><span class="icon icon-link"></span></a>Springy Controls</h3>
+<p>These gain values result in a control system that has springy controls so when you turn the ship you'll notice that it overshoots the target angle and bounces back to the correct angle.</p>
+<p><strong>Angle Controller</strong></p>
+<table>
+<thead>
+<tr>
+<th>Gain</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kp</td>
+<td>0.7093059</td>
+</tr>
+<tr>
+<td>Ki</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Kd</td>
+<td>0.1648936</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Angular Velocity Controller</strong></p>
+<table>
+<thead>
+<tr>
+<th>Gain</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kp</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Ki</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Kd</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Note that the values are for a Rigidbody without a collision shape. You'll need to tweak your values if you add a collision shape.</p>
+<h2 id="conclusion"><a href="#conclusion" aria-hidden="true"><span class="icon icon-link"></span></a>Conclusion</h2>
+<p>All that's left now is to play the scene and try turning the ship with the left/right arrow keys and seeing it in action. Feel free to try out different combinations of PID values while the game is running to find the perfect combination for you.</p>
+<p>Also check out the <a href="https://github.com/robertcorponoi/unity-pid-with-rigidbodies" target="_blank" rel="nofollow noopener noreferrer">repo</a> for this project for a more complex example.</p>
+</div><div class="post__footer"><div class="post-tags"><a href="/tag/unity/" class="post-tags__link">unity</a><a href="/tag/pid/" class="post-tags__link">pid</a><a href="/tag/rigidbody/" class="post-tags__link">rigidbody</a></div></div><div class="author post__author"><img alt="Author image" src="data:image/svg+xml,%3csvg fill='none' viewBox='0 0 328 328' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdefs%3e%3cfilter id='__svg-blur-01a977fbf7b567b5530e68a6b3d8c4c9'%3e%3cfeGaussianBlur in='SourceGraphic' stdDeviation='40'/%3e%3c/filter%3e%3c/defs%3e%3cimage x='0' y='0' filter='url(%23__svg-blur-01a977fbf7b567b5530e68a6b3d8c4c9)' width='328' height='328' xlink:href='data:image/jpeg%3bbase64%2c/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABAAEADASIAAhEBAxEB/8QAGwAAAwADAQEAAAAAAAAAAAAABQYHAwQIAgH/xAAzEAACAQMDAQUGBgIDAAAAAAABAgMEBREAEiEGBxMxQVEiMmFxgaEUFSRCkbEWF1Jy0f/EABoBAAIDAQEAAAAAAAAAAAAAAAMFAQIEBgD/xAAjEQACAQUAAQQDAAAAAAAAAAABAgADBBESITEFIkFRMmFx/9oADAMBAAIRAxEAPwA9cIAwPGkLqy4wWOneokY7z7KRr4s3lqkVmApLHAAySfIahN6qpes%2bpJoYsiipmCRJ5nnBPzP9aXW9Mu36mhjiA67rO8zNuScQIPAIcZ%2bemHpbq%2btqahY5XeoIGe728sPnonRdlhkG%2bsnjiQ%2bCp7TaYKXpOisqI1NE25f3n3mPx0wqUBryQjHPYWslTBdDLHEWSeE4kiYjcujUdrJ8zpY63qloLnZurLbFtq639BXQpwjSqAVfHhkrx9M6odslFVRQTlAhkQMVznaSPDOsTe2XIggWfIzgn66%2b/k4/4N99TvtJ6sq7J1PW08QWSAKhy7SewSPABWA%2bOkqp60rZYnkUR4Xg4aUf2%2bpFJmGRIyo4TL5dwWoqhVbYTG2G9OPHUH7LKpafqqoQ4aGYNyT4YOc6vFzy9NMqDLFCACcZONR609IzWW6w1k7hpEqoldR7ojc4LfycfXRbAjYgylT7lETqBJJAtJRPON20SMwRP5Pj8hohf5Vp7GZ49kcznbge0E9Do7VdK22odKqopBM6Y7pS3Ef/AFHloddKFmJpFh3gKGZR5D0z8tOGQBeQaZY9kshsV0vUdXDEa4yzAsnfSAIxXlSFxx8PMaovZkaxelojcEZJjI5w3z5%2b%2bdeaKj7iXEcxPdngZ5A8s%2bh0fpNkMAWMYUkt9SST9zpTeAcI%2bYdeDEjHaDVU3%2bb3iOaquMbxkSNHSsANoRcHnz50p1kVJWIqw1dwnxLt2zcgEcnPPpon2gSP/sLqRkJw0XdHHkCE51p9Po0aTtK6lu9iYKPINlSdeRQqbSrElsS91UmAdJd8v9NbL7RiaLv8KWli2g95EeCpz6n%2btNNZIApycD11z/1Tfqi5XiWo2LGvMUPHOzdwT8dZLVHd9k%2bJZio/KdQ9A9TUd7twMZIaMlCjkFlHln6Y51iu0tZLVyzQRmGFSRvbgEaivYhRXK49UyRvLURU5gbMyN7j/tOPPJBH86rs0vUtCssFVQyVOw47yFS6sP7Guip76jbzMpYA88QAtL%2bGnasErGLJbhs7vXR%2bjlP4aPd4lQT9dA6ikrrjUhpaeSlpoxl93sk/ADStYr/eLVevynqfawbmKryArA%2b6c8DHl8Dpbf0mbGIZGBgnqCwS3bqW/VERQFqsR5J5wEXI%2bXhpPq6Wqs9z7tvGRlRiQTuUEeH8afhfaCmvd4inq4o5Gq2cBmxkbV5z4aEdUV9BXT0MUNRFLL36g7GyQDpalWopII5DMAY09QdU0EcM0MDtNKyMgKDgEgjOTqW9ygKDaGZRjJ50VenwSx5J15WAA5xjnOuys/TKdoCF7n7iSrdmp5lI7DrlR0N0mo6oiMzsGSQ%2bo8vvroOWJChYcEj3h56473tBKslOdrgg8HH1HodPll7VrxQUqU8%2bJ1TgF%2bDola3bbZZFOsCMGV%2b5W8AMijCP5nUI7WJ4vzGno4WDPAmXIPgSeB9tGr72t3a50ppqeCGDjHeDlv8AzU3qQ1RI8tQ5aRiSSTkk6qlsSdmGJdq4AwDNaUQA/qIllBHssfeH11kpKSmlnikgYq0bh9pPjjWvOAxIGePDOsSIy8gkHOdAufTUrA/B%2b4Wjdmn/ACf/2Q==' /%3e%3c/svg%3e" width="328" data-src="/assets/static/author.de4034a.47c56ffa8bb5f81a48029e779b4a2893.jpg" data-srcset="/assets/static/author.de4034a.47c56ffa8bb5f81a48029e779b4a2893.jpg 328w" data-sizes="(max-width: 328px) 100vw, 328px" class="author__image g-image g-image--lazy g-image--loading"><noscript><img src="/assets/static/author.de4034a.47c56ffa8bb5f81a48029e779b4a2893.jpg" class="author__image g-image g-image--loaded" width="328" alt="Author image"></noscript><div class="author__bio"><p class="author__name">Robert Corponoi</p><p class="author__intro">Self proclaimed game development ninja.</p></div><a href="https://twitter.com/robertcorponoi" target="_blank" rel="noreferrer" class="btn btn--secondary">Follow</a></div></div></main><footer class="footer"><div class="container"><ul class="soc"><li><a href="https://twitter.com/robertcorponoi" target="_blank" rel="noreferrer" title="Twitter" class="soc__icon soc__icon--twitter"><div class="soc__ir"><svg viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M419.6 168.6c-11.7 5.2-24.2 8.7-37.4 10.2 13.4-8.1 23.8-20.8 28.6-36 -12.6 7.5-26.5 12.9-41.3 15.8 -11.9-12.6-28.8-20.6-47.5-20.6 -42 0-72.9 39.2-63.4 79.9 -54.1-2.7-102.1-28.6-134.2-68 -17 29.2-8.8 67.5 20.1 86.9 -10.7-0.3-20.7-3.3-29.5-8.1 -0.7 30.2 20.9 58.4 52.2 64.6 -9.2 2.5-19.2 3.1-29.4 1.1 8.3 25.9 32.3 44.7 60.8 45.2 -27.4 21.4-61.8 31-96.4 27 28.8 18.5 63 29.2 99.8 29.2 120.8 0 189.1-102.1 185-193.6C399.9 193.1 410.9 181.7 419.6 168.6z"></path></svg></div></a></li><li><a href="https://github.com/robertcorponoi" target="_blank" rel="noreferrer" title="GitHub" class="soc__icon soc__icon--github"><div class="soc__ir"><svg viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"></path></svg></div></a></li><li><a href="https://www.linkedin.com/in/robert-corponoi-1353a1112/" target="_blank" rel="noreferrer" title="LinkedIn" class="soc__icon soc__icon--linkedin"><div class="soc__ir"><svg viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"></path></svg></div></a></li></ul><span class="footer__copyright">Copyright © 2020 Robert Corponoi</span><a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer" class="footer__license">All Code MIT Licensed</a></div></footer></div>
+  <script src="/assets/js/app.1cbbcecb.js" defer></script><script src="/assets/js/page--src-templates-post-vue.f4592877.js" defer></script>
+</body>
+</html>
