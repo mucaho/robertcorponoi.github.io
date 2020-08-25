@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D">
+<head>
+  <title>Unreal C++ Creating An AI That Follows &amp; Leads - Robert Corponoi</title><meta name="gridsome:hash" content="85a87da2caa6a3c8ae7647f17d7dfc4c0f704337"><meta data-vue-tag="ssr" charset="utf-8"><meta data-vue-tag="ssr" name="generator" content="Gridsome v0.7.19"><meta data-vue-tag="ssr" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta data-vue-tag="ssr" data-key="format-detection" name="format-detection" content="telephone=no"><meta data-vue-tag="ssr" data-key="description" name="description" content="My Blog"><meta data-vue-tag="ssr" name="description" content="Learn how to create an AI that follows and leads the player"><link data-vue-tag="ssr" rel="icon" href="data:,"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.bd9c2d4c76737c8e645df615f326643d.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.bd9c2d4c76737c8e645df615f326643d.png"><link rel="preload" href="/assets/css/0.styles.b474d50f.css" as="style"><link rel="preload" href="/assets/js/app.4cb7ba09.js" as="script"><link rel="preload" href="/assets/js/page--src-templates-post-vue.bb134615.js" as="script"><link rel="prefetch" href="/assets/js/page--node-modules-gridsome-app-pages-404-vue.f0d98b48.js"><link rel="prefetch" href="/assets/js/page--src-pages-contact-vue.97f55768.js"><link rel="prefetch" href="/assets/js/page--src-pages-index-vue.ada56573.js"><link rel="prefetch" href="/assets/js/page--src-templates-tag-vue.7c7cc7d4.js"><link rel="stylesheet" href="/assets/css/0.styles.b474d50f.css"><noscript data-vue-tag="ssr"><style>.g-image--loading{display:none;}</style></noscript>
+</head>
+<body >
+  <script>
+    // Add dark / light detection that runs before Vue.js load. Borrowed from overreacted.io
+    (function () {
+      window.__onThemeChange = function () { };
+      function setTheme(newTheme) {
+        window.__theme = newTheme;
+        preferredTheme = newTheme;
+        document.body.setAttribute('data-theme', newTheme);
+        window.__onThemeChange(newTheme);
+      }
+
+      var preferredTheme;
+      try {
+        preferredTheme = localStorage.getItem('theme');
+      } catch (err) { }
+
+      window.__setPreferredTheme = function (newTheme) {
+        setTheme(newTheme);
+        try {
+          localStorage.setItem('theme', newTheme);
+        } catch (err) { }
+      }
+
+      var darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      darkQuery.addListener(function (e) {
+        window.__setPreferredTheme(e.matches ? 'dark' : 'light')
+      });
+
+      setTheme(preferredTheme || (darkQuery.matches ? 'dark' : 'light'));
+    })();
+  </script>
+  <div id="app" data-server-rendered="true"><nav class="navbar"><div class="container"><a href="/" class="navbar__logo">RC</a><span id="navbar-toggle" class="navbar__toggle"><div id="nav-icon" class="nav-icon"><div></div></div></span><ul id="navbar-main" class="navbar__main hide"><li><a href="/tag/godot" class="navbar__links">Godot</a></li><li><a href="/tag/unity" class="navbar__links">Unity</a></li><li><a href="/tag/unreal" class="navbar__links">Unreal</a></li><li><a href="/contact" class="navbar__links">Let's Work Together</a></li></ul></div></nav><div class="header"><button role="button" aria-label="Toggle dark/light" class="toggle-theme"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg></button></div><main class="main"><div class="post container"><div class="post__header"><h1 class="post__title">Unreal C++ Creating An AI That Follows &amp; Leads</h1><div class="post-meta post__meta">
+  Committed 25. August 2020.
+  <strong>29 min parse.</strong></div><img alt="Cover image" src="data:image/svg+xml,%3csvg fill='none' viewBox='0 0 847 525' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdefs%3e%3cfilter id='__svg-blur-e25f127c9c04fcb1d54fa24829b54f4d'%3e%3cfeGaussianBlur in='SourceGraphic' stdDeviation='10'/%3e%3c/filter%3e%3c/defs%3e%3cimage x='0' y='0' filter='url(%23__svg-blur-e25f127c9c04fcb1d54fa24829b54f4d)' width='847' height='525' xlink:href='data:image/png%3bbase64%2ciVBORw0KGgoAAAANSUhEUgAAAEAAAAAoCAYAAABOzvzpAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAP0UlEQVRo3pVaaZdU1RXtH5EAPVV3dVV3Vc8NzRDjEjGISgcciShqXCExIgGNKyoxJsbEARUHhKZp6LHmoefqeaIHmpngWvlDJ/uce%2b%2br%2b2oA8%2bGuV/Wq6tXd%2b%2byzz7n3vZLvzw7T2R9G6IfzY3S%2bc5w6L0zQhYsZ6uqepIuXpujS5Wm63DtDPX2z1Ns/R30D89Q/uEADoUUaDC9RKLJM4egyRaJXKBJboWh8hWLxVYolVimeWKN4co0SPFLrMpLpq85IDdljI2fkfG79Lqmvxdfmwf8Vi6v/jsSuyFzCmFcosiRzHMRceb48bxkDC9TXP0%2b9fXNUcs4Fegqgp%2blSzwxAzwL0HEDPAzQADwJwaMkCbQBrsHoyAlIDdYANb1Baj6GRa%2b4xqsawM647r%2bWznO%2bnrWsZcvJISShSmJBoTJHC8%2bV58/yZjAEhYp5KOruy0e7maPfM6mgr4PnRLhDpnAinDHhnsm7AWaB6jBUZ9ndyCMkjQtSh5pBwKWPVImHZRQJjK7lwEeC7FXg78iwRlkohqUdzIp9IWuB11J0JFgOuQY78hOEmwybip5HgKMFODVHBIpVko58v%2b/tG3wG/VhS8O%2bpZ4A648RsPHmM3ChJRSA1OOhQhwaRC2FJBSVex6BcEf8UBH0tYOZ/OEpAL3om6A/yGC/zoxE0a5eO4OeaPLBm5RDyYBOUJOhXi%2balQYnKfCSiU%2b6H7mF6e4T0IvAYyNnELwG/heBORvE6jkzcpM3VNncvcxLilBpMzYZNw/f8jwTLGrApUKlgE5Lt%2bv3H9YtKX6BfJ%2b1zZa%2bASaQwGn0hfoa6LIYrE53GdZTp7LoRrz8r5RGoZ11jHtdbx%2bw2HBD4aUkxqKBLyzdGUUZ6bkwqmMlheIATY8ue6WLjOF4m%2bU89zwRvgarL8OjXM31%2bhOADGk5x/GZqYuovrzdHJt9%2bj787208TkbYmuImAN110VQpik5NAKrsHn1nC9a44SOHWEDPYFFwlFVOCqCBYBbvmrmh8K5%2bd%2b8egb4GoyaTh0QgBfoRgAM3iOKkdwavYezS38V859/0MU110CiA2kwW2MWzQ%2biZG5peSvo89qYGKYBCER1%2bWj%2bY8kiEkPq/kICRg8L6OCfDNUPlCS6/75pa%2bA82tWHeAj14X1ZJr/ZFkA8UgigkwERykzfZem534E0Gt0rjNBx/70ET28u4NqA1upfcdj9OzzR%2bnY8Y/ok08vICBjEvnxzA387jYIuI7XN8UDVCrdoiGQOTTCEV4RVSRwjOI/ZcSXIPMFOSZSazKyZuguiaIA1epqAu4rf7vkbciFYwn%2bfBGfLyLSVxChq6IElv/45B2amrkn0ezpm6D3PjhN%2b548RDX%2bZiqvrKPqmiaqrApiBMjra6ItZT4539D8C3rs8efo8MvH6J13P6Vvv49gTjMAvI40uUXx8DSFeoYpFpmlWHSOEgAaxxyS%2bP/0EKKNOXEw4skVkDmKuS1LKggBOSrQBNyv%2bbnigGcWo3HutTk95vHZghCQ7dfXKAkFjI6wed2gwcgc/f3js3TwmVepoWkXebwNArACgH21LVQX3Cbn6oJtIOYg%2bQNtIKVRSKnC%2bdIKP20urQE5zaKS/QdeoddeO0EfnvqSvvu6hwYGJgEa4EFCMrGI4zyFcC7UP0nhgWkhoH9gSpfEtYJpUFKs/hvw/KXBMJ%2bbw2ezApxJMAaYSCAHwXAK7A9Din2Xhulv739GR148Srse2gcw9bRpS7WAYrnXADhHvKqmgfx1AIzIMyGsCiEA7z3VQfLifaC%2bXc4bQipYLZW1VIfftjbvor17n6FDh47SyZMf02efdVHn%2bThFQPpg7xiIyGDeM5jvnPaBnIWTXjSVFKsAfQN8bhpjSsCHo0vyY06BGP8YRMShgHQKjOJPv/6ql15//STt3P4o1QBApaeOagCGI%2bqprhdgDNgrgLIECCH4Pn/HV9eKc61CAJ8TUuR9vZDAvw3Wb6PmehDprSdvdUCOHqjKi%2b%2b0b3uEnnryN/T7V4/T%2b1AJp11cK9TtA6sFCJClrloqnu9MIXcykgZR6aBWnYUP19RBmFQE0voBufnWm6doz54DVIfoVWGS1QBX52%2bi1sbt1IDJMpAKTJAj6KttVZEEOZU66jWaED7HPuAFIZwWfK6aSQooknxMpleRxt/x8W/xeQCfNza0Uz3SyOOppYAP/%2bMN0vadj0mKckVwtcYWAa4UMGt9jj6D7%2bHo98NswotCQCqtauvl3gydgpl1dBymICby800eqsLkg5iI39eISEDqODYBvB%2bAGYiYnERTR1xLmqNrZM/f8SCarU3bqa15B5VB6kwKk9DcsI1agq0UBLE%2bfKcxqFPHE5DvVSL6tbh2La7X1NguxzPfDMB8b%2bs2XXWsuZXAIUBVAEPAEl7P4vWcNArdl8foEsYn/%2b6il44chxn9imoBxsug/Y0SgWBwqxw58ixJjo7X3wKZNwqIckyyCucZPMu7vNIv51jaJgX4fWlFLR18/Nd0%2bMBz5AFJ5QDIZLY27aS9D%2b%2blIwefV%2boCIUwme4oyTaSUtxFGu0Pev/3nT9BP3BXgqiGyCEjq1WF8pZAC1BqApX%2bxexRKmNAKWKHnXvgdzMxDpeU%2bqsLE6zGRehDAEwrUtVA18rEMn/HnHGGWNgNkYKbMcY77NAn8mQHBgwlik9u/7wB1PNEh32dzrMZ3mdAnHn2KXnnmBfJ7VZopdTSKkspQLWpAVGmZl55%2b9jXpEFPDV60NE1UFErYCuBJkFWCb4KKzVOQUYOeP6TJ46q9nqH37btq0uVJKVB0ABXSOmhLHJYuBMVgmgSfq0YbGHsCSLteqMO7P4MsqfCh51bS7fRft2fUIeQGO5V1bA3kD9M6W7bT3oUeprQFqq23CNWrlevxf9fAbX20z7UDeD4Znpf1Wi7Or1ppgTfctuhcobIL5ZXAgNC9EhCOLuPBtvF%2bgN/74AbVufUiky82MRBqEcPT5KLLEZ6XlNXKOj8b0%2bMgR4zQQ52dDw/D6VLrUAgibGgMThUBddVAam9xWeEMbZF6D9KqoglF6vHjdREHOe6joqzN9aJTuoANdd2%2bZpdx9AI9ILgGsAocAnQZMQkQvHlgJfSCCZTSWuUtd3WPwhGOQHur8Zo%2bAYgAsSZ6gpADLulK5uwPIyluJIJsnhk/3B2XGG3SFEG8AgUwYG6wXiqiobqHywCEq83eQL7AdyqmiEyf/gby/A8DreqcomwLZdvgBnSCrINsJLooJmlZYsbYMImbw2Zz0/2MTd%2bjrbwbRxT0PXwhIFP0AaNzeeIADyJwDWSx5Jk3qOwhigAyUzxvFeH2qVVYk%2bIQc8RJOJf8O8jc9TVsqGung0y9jvXFdrwTRirs2THUJtOWfS0C2Esw7KjAKUCowq0Elo3CUt5lnpccez9xB73%2bDPv7nOdq9pwPRrddOX6fl70OPnwVkwAggEGD6A6%2bYZtAhTEqkVo3qH%2bp16VTkNja1wxzraceuPbJO4EWSgNckZOW/plIgmZP/uQQoH1BrAbcPLLtUYLpBllMoMi%2bDWc5M35Nz77z7L2pu2Umbt3h0rtc6IFUVaJUU4HRhVXBK%2bAxYpIKqENo09XlOD/6%2bUY2ffSG4VUg6/eVlWWmqRZjaKBXzc/YETAlcdSpApBgBPVYlMAuisFZArgrMqpAXQ0xCBCsyXgVOzvyIa8zQq789gQk2ITXUGsBEUvp/EFCoPLLcjWkyWCl1uuEpLavRqcEtdgP9fHMVHT/xkYA3kTfRFwUMX3WaIJP/cUv%2bajms9wSFgD7LB1xL4iXXngB3ha77AMwyjEfW4LEFnFuFSd4GEfew7k%2bhf3gdbXKLY4RZkD6rQujVX7kCWWZ9zmRJ9eCWGoT4UAJ/tqkSeX9ENkl4t4mjbqKvCLCin7Y6wBwCQvamqL0ilI7Q2hN0%2b4DZFlvN7gjr3WBegzMJvCnBEeBujPcEPj/dQ4/vexYA2Oi8Ev0yUzbZ3bWxeU20tT9UO%2bpQi6TG5p3yOfci/YNTskeYdqRfLPqW/E35i5lVbtFd4fkCPqBJ0BeK2bfChty7wrwOV2pYkcmxGvj43vunaeu2X8IUq0Tipjfw6xQwPmH2BMw5LqsNWCPUBtqk5//iy0tS8hzwo9dk56lQ9EX%2bBaKvNkUX3QTwzpCrIbKqgewNaPbc9wIx0uuum51pbUQxvUXFtZm7s%2bnZH3GNJTr6h79gWQsv8Aa1CbY5DZHpB1TtVxUhiN6fuz1OgTePfSCbp/wfQ3oUA5%2b09gIdAqLmPqG6OyR3hmwCpCGyNkYcL4gaM3TvDxoSTCrk3hxJpldlu4zVwJNk2TIRF7HAevGlNygAIriPN9XAgGeFcPn0wPR8/iZ53XHgsOwWy6arGN9GftkbWnctfw14I3%2bj5pC5M8R3hbM%2bYFcD%2b9aYaYqyXpC/SaqU4GyP6YioHdoN2do2auD3E5BwZvo/dObbED21/xCWztxSByx/qJFNFTa9TXD8tm0PY25jcl8hC97q%2bJy%2bf821ERrLWfwIAVr%2b3NaXmGcB3OUQg5fEg2p/YNAhwTwHkGuI2VtkCS0/5y7NsEoJjlpKqsWibGOntXQnQQLvGvPe4U40NaXwBzZG1So36UpQT59/0S19fkobnfl9wVWfI/0V13MDZitcRX/B3B3OkFIBSOgBCb3TUhLZC3JLoimLbhXYSljL5p9Wg7ph4iYinlImKXv5OpK8exxHCT12/ENqaNyG6Ks%2bgFeIb751Su4NGFWlR6xbYEPrrp7fpKXq%2b3PBL%2bmHJvTDEur5AH44YpIudCsSbBU4myQ5W%2bVCQtStAiFBs59Iu2%2bY2kQ47Spemz18Y2Bc06fQSPX0TdLhl9%2bgLVjk7O94UXyEnT57rcJu75K%2b3viUXeyYanpC4SUtfSZgXhFw/sIEdV6c0A9JTOaUxDnXVpmtAscPHFNcy%2bkPLDfmKA1v6OE2yUR6VdQQ1yYpFUNufl4Tf%2bjsSss9BttXXE5vNztWvY%2banV87%2boYABJR3vPqADQSMEz8lwiowJNgVwRCgSHAvkvLTYdWVDtlb51ZauB5vWXdymZUQBhF8LgEjC5sU0X29uLsld3uV57S6rn3/5byar54VUrnfp4MrzwiJCromnEdlFAluL%2bgTP5hXhqhvm5uSwoOVYHaO1VhxKoM7LSwgw9nSpTrJdVFDODoP8seFFFd5cxndmnuZ6/iR2fNfdiIv4DUBWfC8CzZLJWfPjainw7oyrqfDui9P6bI44yySskpw%2b0GeEmw15FaJVNYsFbCrLtPkaPOtNt7aMu21ba5Oa%2buMtSxwy/DCFgEc9QHzhJgmgNXN2EDAqHpETlJBGaJRgSHB7BnmbpuZByjMczd2n2CeyMhtmrLpseYiQ/btNEHm3qNNmHkcxw18VUwuash3Hn5Yyst5AT4wLxikzPcqAv4HHB%2bTg4TGj0AAAAAASUVORK5CYII=' /%3e%3c/svg%3e" width="847" data-src="/assets/static/main.4303ea3.0b05b0644aa83e7fb840b562679686d8.png" data-srcset="/assets/static/main.a67b0b2.0b05b0644aa83e7fb840b562679686d8.png 480w, /assets/static/main.4303ea3.0b05b0644aa83e7fb840b562679686d8.png 847w" data-sizes="(max-width: 847px) 100vw, 847px" class="post__image g-image g-image--lazy g-image--loading"><noscript><img src="/assets/static/main.4303ea3.0b05b0644aa83e7fb840b562679686d8.png" class="post__image g-image g-image--loaded" width="847" alt="Cover image"></noscript></div><div class="post__content"><h2 id="table-of-contents"><a href="#table-of-contents" aria-hidden="true"><span class="icon icon-link"></span></a><strong>Table of Contents</strong></h2>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#playercharacter">PlayerCharacter</a></li>
+<li><a href="#allycharacter">AllyCharacter</a></li>
+<li><a href="#allyaicontroller">AllyAIController</a></li>
+<li><a href="#making-the-allycharacter-follow-the-playercharacter">Making the AllyCharacter Follow the PlayerCharacter</a></li>
+<li><a href="#making-the-allycharacter-lead-the-playercharacter">Making the AllyCharacter Lead the PlayerCharacter</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+<h2 id="overview"><a href="#overview" aria-hidden="true"><span class="icon icon-link"></span></a><strong>Overview</strong></h2>
+<p>In this tutorial we'll look at what it takes to create an AI that follows the player and can lead the player to waypoints. This won't be too in-depth but it'll get you started with an AI system of following and leading without relying on logic placed in <code>Tick</code> leading to more fluid movement and better performance. Let's take a look at the classes we'll need to make this happen.</p>
+<ul>
+<li><strong>PlayerCharacter</strong> - The PlayerCharacter is going to be a standard third-person Character that we'll expand on.</li>
+<li><strong>AllyCharacter</strong> - The AllyCharacter is the Character that's going to follow and lead the PlayerCharacter.</li>
+<li><strong>AllyAIController</strong> - The AllyAIController is going to be the AIController that controls when/how the AllyCharacter moves.</li>
+</ul>
+<h2 id="playercharacter"><a href="#playercharacter" aria-hidden="true"><span class="icon icon-link"></span></a><strong>PlayerCharacter</strong></h2>
+<p>So as stated above the PlayerCharacter is a standard third person Character but we'll go over it quickly as it's important to be on the same page before progressing.</p>
+<p>The PlayerCharacter has the following:</p>
+<ul>
+<li>A <code>USkeletalMeshComponent</code> so we can change the mesh of the PlayerCharacter to a default third person skeletal mesh.</li>
+<li>A <code>USpringArmComponent</code> and <code>UCameraComponent</code> to add a camera on a boom so we can have some decent camera controls.</li>
+<li>A boolean that keeps track of whether the PlayerCharacter is currently sprinting or not. This will be used by the animation blueprint and the AllyCharacter.</li>
+<li>Methods to respond to axis inputs for moving forward, backward, left and right.</li>
+<li>Methods to respond to the sprint button being pressed and released.</li>
+</ul>
+<p>Below is the PlayerCharacter header file where the components and methods talked about above are defined:</p>
+<p><strong>PlayerCharacter.h</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"CoreMinimal.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/Character.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"PlayerCharacter.generated.h"</span></span>
+
+<span class="token comment">/**
+ * PlayerCharacter is the main Character of the game controlled by the player.
+ */</span>
+<span class="token function">UCLASS</span><span class="token punctuation">(</span>config <span class="token operator">=</span> Game<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">FOLLOWLEADAI_API</span> APlayerCharacter <span class="token operator">:</span> <span class="token keyword">public</span> ACharacter
+<span class="token punctuation">{</span>
+	<span class="token function">GENERATED_BODY</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token comment">// Sets default values for this character's properties.</span>
+	<span class="token function">APlayerCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// The PlayerCharacter's skeletal mesh.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadOnly<span class="token punctuation">,</span> Category <span class="token operator">=</span> Mesh<span class="token punctuation">)</span>
+	<span class="token keyword">class</span> <span class="token class-name">USkeletalMeshComponent</span><span class="token operator">*</span> PlayerSkeletalMesh<span class="token punctuation">;</span>
+
+	<span class="token comment">// The PlayerCharacter's camera.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadOnly<span class="token punctuation">,</span> Category <span class="token operator">=</span> Camera<span class="token punctuation">)</span>
+	<span class="token keyword">class</span> <span class="token class-name">UCameraComponent</span><span class="token operator">*</span> PlayerCamera<span class="token punctuation">;</span>
+
+	<span class="token comment">// The boom for the PlayerCharacter's camera.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadOnly<span class="token punctuation">,</span> Category <span class="token operator">=</span> Camera<span class="token punctuation">)</span>
+	<span class="token keyword">class</span> <span class="token class-name">USpringArmComponent</span><span class="token operator">*</span> PlayerCameraSpringArm<span class="token punctuation">;</span>
+
+	<span class="token comment">// Indicates whether the PlayerCharacter is sprinting or not.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Animation<span class="token punctuation">)</span>
+	<span class="token keyword">bool</span> bIsSprinting <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+<span class="token keyword">protected</span><span class="token operator">:</span>
+	<span class="token comment">// The speed at which the PlayerCharacter should walk at.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Movement<span class="token punctuation">)</span>
+	<span class="token keyword">float</span> WalkSpeed <span class="token operator">=</span> <span class="token number">200.f</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// The speed at which the PlayerCharacter should sprint at.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Movement<span class="token punctuation">)</span>
+	<span class="token keyword">float</span> SprintSpeed <span class="token operator">=</span> <span class="token number">500.f</span><span class="token punctuation">;</span>
+
+<span class="token keyword">protected</span><span class="token operator">:</span>
+	<span class="token comment">/**
+	 * Called when the PlayerCamera moves forward and backward.
+     *
+     * @param Value The axis value from the input.
+	 */</span>
+	<span class="token keyword">void</span> <span class="token function">MoveForwardBackward</span><span class="token punctuation">(</span><span class="token keyword">float</span> Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called when the PlayerCamera moves left and right.
+	 *
+	 * @param Value The axis value from the input.
+	 */</span>
+	<span class="token keyword">void</span> <span class="token function">MoveLeftRight</span><span class="token punctuation">(</span><span class="token keyword">float</span> Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called when the sprint input action button is pressed down.
+	 */</span>
+	 <span class="token keyword">void</span> <span class="token function">SprintStart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	 <span class="token comment">/**
+	  * Called when the sprint input action button is released.
+	  */</span>
+	 <span class="token keyword">void</span> <span class="token function">SprintStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called to bind functionality to input.
+	 *
+	 * @param PlayerInputComponent An Actor component for input bindings.
+	 */</span>
+	<span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">SetupPlayerInputComponent</span><span class="token punctuation">(</span><span class="token keyword">class</span> <span class="token class-name">UInputComponent</span><span class="token operator">*</span> PlayerInputComponent<span class="token punctuation">)</span> override<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Now in the cpp file we:</p>
+<ul>
+<li>Load the skeletal mesh and AnimBlueprint (look at the <a href="https://github.com/robertcorponoi/unreal-follow-lead-ai" target="_blank" rel="nofollow noopener noreferrer">repo</a> or Unreal's third person character demo for an example of the animation blueprint as it's out of scope for this tutorial.</li>
+<li>Create the components, set their default values, and attach them where they're needed.</li>
+<li>Set up the methods that respond to the axis and action inputs.</li>
+<li>Create the methods defined the header to move the PlayerCharacter forward, backward, left, right. Also set up the methods to start and stop sprinting.</li>
+</ul>
+<p><strong>PlayerCharacter.cpp</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"PlayerCharacter.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Camera/CameraComponent.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Components/InputComponent.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Components/CapsuleComponent.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Components/SkeletalMeshComponent.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/Controller.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/CharacterMovementComponent.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/SpringArmComponent.h"</span></span>
+
+<span class="token comment">/**
+ * Sets the default values for the PlayerCharacter.
+ */</span>
+APlayerCharacter<span class="token operator">::</span><span class="token function">APlayerCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Load the resources needed for the PlayerCharacter.</span>
+	<span class="token keyword">static</span> ConstructorHelpers<span class="token operator">::</span>FObjectFinder<span class="token operator">&lt;</span>USkeletalMesh<span class="token operator">></span><span class="token function">PlayerSkeletalMeshAsset</span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">static</span> ConstructorHelpers<span class="token operator">::</span>FObjectFinder<span class="token operator">&lt;</span>UAnimBlueprint<span class="token operator">></span><span class="token function">PlayerAnimBlueprint</span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"AnimBlueprint'/Game/Mannequin/Animations/ThirdPerson_AnimBP.ThirdPerson_AnimBP'"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set the SkeletalMeshComponent to the Character's mesh and adjust its properties.</span>
+	PlayerSkeletalMesh <span class="token operator">=</span> <span class="token function">GetMesh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerSkeletalMesh<span class="token operator">-></span><span class="token function">SetSkeletalMesh</span><span class="token punctuation">(</span>PlayerSkeletalMeshAsset<span class="token punctuation">.</span>Object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerSkeletalMesh<span class="token operator">-></span><span class="token function">SetRelativeLocationAndRotation</span><span class="token punctuation">(</span><span class="token function">FVector</span><span class="token punctuation">(</span><span class="token number">0.f</span><span class="token punctuation">,</span> <span class="token number">0.f</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">90.f</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">FRotator</span><span class="token punctuation">(</span><span class="token number">0.f</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">90.f</span><span class="token punctuation">,</span> <span class="token number">0.f</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerSkeletalMesh<span class="token operator">-></span><span class="token function">SetAnimInstanceClass</span><span class="token punctuation">(</span>PlayerAnimBlueprint<span class="token punctuation">.</span>Object<span class="token operator">-></span>GeneratedClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Create the SpringArmComponent and attach it to the RootComponent.</span>
+	PlayerCameraSpringArm <span class="token operator">=</span> CreateDefaultSubobject<span class="token operator">&lt;</span>USpringArmComponent<span class="token operator">></span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"PlayerCameraSpringArm"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerCameraSpringArm<span class="token operator">-></span>TargetArmLength <span class="token operator">=</span> <span class="token number">500.f</span><span class="token punctuation">;</span>
+	PlayerCameraSpringArm<span class="token operator">-></span>bUsePawnControlRotation <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+	PlayerCameraSpringArm<span class="token operator">-></span><span class="token function">SetupAttachment</span><span class="token punctuation">(</span>RootComponent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Create the CameraComponent and attach it to the SpringArmComponent.</span>
+	PlayerCamera <span class="token operator">=</span> CreateDefaultSubobject<span class="token operator">&lt;</span>UCameraComponent<span class="token operator">></span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"PlayerCamera"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerCamera<span class="token operator">-></span>bUsePawnControlRotation <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	PlayerCamera<span class="token operator">-></span><span class="token function">SetupAttachment</span><span class="token punctuation">(</span>PlayerCameraSpringArm<span class="token punctuation">,</span> USpringArmComponent<span class="token operator">::</span>SocketName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Sets the capsule collider's size.</span>
+	<span class="token function">GetCapsuleComponent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">InitCapsuleSize</span><span class="token punctuation">(</span><span class="token number">40.f</span><span class="token punctuation">,</span> <span class="token number">100.f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set the PlayerCharacter to not rotate when the controller rotates.</span>
+	bUseControllerRotationPitch <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	bUseControllerRotationYaw <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	bUseControllerRotationRoll <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set the default values for the PlayerCharacter's movement.</span>
+	<span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>bOrientRotationToMovement <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+	<span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>RotationRate <span class="token operator">=</span> <span class="token function">FRotator</span><span class="token punctuation">(</span><span class="token number">0.0f</span><span class="token punctuation">,</span> <span class="token number">540.0f</span><span class="token punctuation">,</span> <span class="token number">0.0f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>MaxWalkSpeed <span class="token operator">=</span> WalkSpeed<span class="token punctuation">;</span>
+
+	<span class="token comment">// Set the PlayerCharacter to be the default player of the game.</span>
+	AutoPossessPlayer <span class="token operator">=</span> EAutoReceiveInput<span class="token operator">::</span>Player0<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called to bind functionality to input.
+ *
+ * @param PlayerInputComponent An Actor component for input bindings.
+ */</span>
+<span class="token keyword">void</span> APlayerCharacter<span class="token operator">::</span><span class="token function">SetupPlayerInputComponent</span><span class="token punctuation">(</span>UInputComponent<span class="token operator">*</span> PlayerInputComponent<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">check</span><span class="token punctuation">(</span>PlayerInputComponent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set up the methods to respond to the PlayerCharacter moving forward, backward,</span>
+	<span class="token comment">// left, and right.</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAxis</span><span class="token punctuation">(</span><span class="token string">"MoveForwardBackward"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>MoveForwardBackward<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAxis</span><span class="token punctuation">(</span><span class="token string">"MoveLeftRight"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>MoveLeftRight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set the "TurnLeftRight" and "LookUpDown" axis inputs to control the yaw and pitch</span>
+	<span class="token comment">// of the camera.</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAxis</span><span class="token punctuation">(</span><span class="token string">"TurnLeftRight"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APawn<span class="token operator">::</span>AddControllerYawInput<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAxis</span><span class="token punctuation">(</span><span class="token string">"LookUpDown"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APawn<span class="token operator">::</span>AddControllerPitchInput<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set up the methods to respond to the sprint action input being pressed and released.</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAction</span><span class="token punctuation">(</span><span class="token string">"Sprint"</span><span class="token punctuation">,</span> IE_Pressed<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>SprintStart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAction</span><span class="token punctuation">(</span><span class="token string">"Sprint"</span><span class="token punctuation">,</span> IE_Released<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>SprintStop<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when the PlayerCamera moves forward and backward.
+ *
+ * @param Value The axis value from the input.
+ */</span>
+<span class="token keyword">void</span> APlayerCharacter<span class="token operator">::</span><span class="token function">MoveForwardBackward</span><span class="token punctuation">(</span><span class="token keyword">float</span> Value<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Return early if the Controller is a nullptr or the axis input value is zero.</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">GetController</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">nullptr</span> <span class="token operator">||</span> Value <span class="token operator">==</span> <span class="token number">0.f</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Find the forward rotation.</span>
+	<span class="token keyword">const</span> FRotator Rotation <span class="token operator">=</span> <span class="token function">GetController</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">GetControlRotation</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">const</span> FRotator <span class="token function">YawRotation</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> Rotation<span class="token punctuation">.</span>Yaw<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Find the forward vector.</span>
+	<span class="token keyword">const</span> FVector Direction <span class="token operator">=</span> <span class="token function">FRotationMatrix</span><span class="token punctuation">(</span>YawRotation<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">GetUnitAxis</span><span class="token punctuation">(</span>EAxis<span class="token operator">::</span>X<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Apply movement to the forward direction of the PlayerCharacter with a value</span>
+	<span class="token comment">// of `Value`.</span>
+	<span class="token function">AddMovementInput</span><span class="token punctuation">(</span>Direction<span class="token punctuation">,</span> Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when the PlayerCamera moves left and right.
+ *
+ * @param Value The axis value from the input.
+ */</span>
+<span class="token keyword">void</span> APlayerCharacter<span class="token operator">::</span><span class="token function">MoveLeftRight</span><span class="token punctuation">(</span><span class="token keyword">float</span> Value<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Return early if the Controller is a nullptr or the `Value` is zero.</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">GetController</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token keyword">nullptr</span> <span class="token operator">||</span> Value <span class="token operator">==</span> <span class="token number">0.f</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Find the right rotation.</span>
+	<span class="token keyword">const</span> FRotator Rotation <span class="token operator">=</span> <span class="token function">GetController</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">GetControlRotation</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">const</span> FRotator <span class="token function">YawRotation</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> Rotation<span class="token punctuation">.</span>Yaw<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Find the right direction.</span>
+	<span class="token keyword">const</span> FVector Direction <span class="token operator">=</span> <span class="token function">FRotationMatrix</span><span class="token punctuation">(</span>YawRotation<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">GetUnitAxis</span><span class="token punctuation">(</span>EAxis<span class="token operator">::</span>Y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Add movement to the right axis with a value of `Value`.</span>
+	<span class="token function">AddMovementInput</span><span class="token punctuation">(</span>Direction<span class="token punctuation">,</span> Value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when the sprint input action button is pressed down and it sets the
+ * `bIsSprinting` boolean to `true` so the animator knows to play the sprint animation.
+ */</span>
+<span class="token keyword">void</span> APlayerCharacter<span class="token operator">::</span><span class="token function">SprintStart</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	bIsSprinting <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>MaxWalkSpeed <span class="token operator">=</span> SprintSpeed<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when the sprint input action button is pressed down and it sets the
+ * `bIsSprinting` boolean to `false` so the animator knows to stop the sprint animation.
+ */</span>
+<span class="token keyword">void</span> APlayerCharacter<span class="token operator">::</span><span class="token function">SprintStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	bIsSprinting <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>MaxWalkSpeed <span class="token operator">=</span> WalkSpeed<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>So now if you save, compile, drag out an instance of the PlayerCharacter, and press play (assuming you set up the mesh and animation blueprint or copied it from the repo) you should be able to move the PlayerCharacter with the input keys you specified. Also if you press the sprint button you set you should see the PlayerCharacter moving faster then if you let it go you should see it go back to walking again.</p>
+<h2 id="allycharacter"><a href="#allycharacter" aria-hidden="true"><span class="icon icon-link"></span></a><strong>AllyCharacter</strong></h2>
+<p>Now let's see what we need for the AllyCharacter:</p>
+<ul>
+<li>A <code>USkeletalMeshComponent</code> so that we can add a mesh and see our AllyCharacter (can be found in the repo or any character from Mixamo/etc will work).</li>
+<li>A <code>UBoxComponent</code> to act as a box collider that will let us know when the AllyCharacter has come in contact with a Waypoint (created later on when implementing leading).</li>
+<li>A variable to keep a reference to the PlayerCharacter. This will be populated manually when the AllyCharacter is placed onto the level.</li>
+<li>A variable to know if the AllyCharacter is sprinting or not. Unlike the PlayerCharacter this will be managed by the AIController we'll create later instead of player input.</li>
+<li>Methods to handle what happens when a component enters the box collider.</li>
+<li>Methods to make the AllyCharacter sprint and stop sprinting. Just as with the variables above this will be called by the AIController instead of any input manager.</li>
+</ul>
+<p>So let's get started and create a new C++ class with a base parent of Character and name it AllyCharacter. I also put mine in a folder named Ally.</p>
+<p>Now let's create the variables and methods we discussed above in the header file:</p>
+<p><strong>AllyCharacter.h</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"CoreMinimal.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/Character.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AllyCharacter.generated.h"</span></span>
+
+<span class="token comment">/**
+ * The AllyCharacter follows and leads the PlayerCharacter.
+ */</span>
+<span class="token function">UCLASS</span><span class="token punctuation">(</span>config <span class="token operator">=</span> Game<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">FOLLOWLEADAI_API</span> AAllyCharacter <span class="token operator">:</span> <span class="token keyword">public</span> ACharacter
+<span class="token punctuation">{</span>
+	<span class="token function">GENERATED_BODY</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token comment">// Sets default values for this character's properties.</span>
+	<span class="token function">AAllyCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// The SkeletalMeshComponent of the AllyCharacter.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">)</span>
+	<span class="token keyword">class</span> <span class="token class-name">USkeletalMeshComponent</span><span class="token operator">*</span> AllySkeletalMesh<span class="token punctuation">;</span>
+
+	<span class="token comment">// The BoxComponent that to use as a trigger for detecting Waypoints.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">)</span>
+	<span class="token keyword">class</span> <span class="token class-name">UBoxComponent</span><span class="token operator">*</span> AllyBoxCollider<span class="token punctuation">;</span>
+
+	<span class="token comment">// The PlayerCharacter to follow and lead.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Ally<span class="token punctuation">)</span>
+	<span class="token keyword">class</span> <span class="token class-name">APlayerCharacter</span><span class="token operator">*</span> PlayerCharacter<span class="token punctuation">;</span>
+
+	<span class="token comment">// Indicates whether the AllyCharacter is sprinting or not.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadOnly<span class="token punctuation">)</span>
+	<span class="token keyword">bool</span> bIsSprinting <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+<span class="token keyword">protected</span><span class="token operator">:</span>
+	<span class="token comment">// The speed at which the AllyCharacter should walk at.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Movement<span class="token punctuation">)</span>
+	<span class="token keyword">float</span> WalkSpeed <span class="token operator">=</span> <span class="token number">200.f</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// The speed at which the AllyCharacter should sprint at.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Movement<span class="token punctuation">)</span>
+	<span class="token keyword">float</span> SprintSpeed <span class="token operator">=</span> <span class="token number">500.f</span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token comment">/**
+	 * Called when the AllyCharacter is created.
+	 */</span>
+	<span class="token keyword">void</span> <span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span> override<span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called when a component enters the AllyCharacter's box collider.
+	 */</span>
+	<span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">void</span> <span class="token function">OnComponentEnterBoxCollider</span><span class="token punctuation">(</span>UPrimitiveComponent<span class="token operator">*</span> OverlappedComp<span class="token punctuation">,</span> AActor<span class="token operator">*</span> OtherActor<span class="token punctuation">,</span> UPrimitiveComponent<span class="token operator">*</span> OtherComp<span class="token punctuation">,</span> int32 OtherBodyIndex<span class="token punctuation">,</span> <span class="token keyword">bool</span> bFromSweep<span class="token punctuation">,</span> <span class="token keyword">const</span> FHitResult<span class="token operator">&amp;</span> SweepResult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called to make the AllyCharacter sprint.
+	 */</span>
+	<span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">void</span> <span class="token function">SprintStart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called to make the AllyCharacter stop sprinting
+	 */</span>
+	<span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">void</span> <span class="token function">SprintStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Now in the AllyCharacter's cpp file we:</p>
+<ul>
+<li>Load the mesh and animation blueprint for the AllyCharacter. Again these can be found in the <a href="https://github.com/robertcorponoi/unreal-follow-lead-ai" target="_blank" rel="nofollow noopener noreferrer">repo</a> if you need guidance or don't want to make your own.</li>
+<li>Create the box collider and its properties so that it acts as a trigger and then finally registers the <code>OnComponentEnterBoxCollider</code> method to respond to components entering the box collider.</li>
+</ul>
+<p><strong>AllyCharacter.cpp</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AllyCharacter.h"</span></span>
+
+<span class="token comment">/**
+ * Sets the default values for the AllyCharacter.
+ */</span>
+AAllyCharacter<span class="token operator">::</span><span class="token function">AAllyCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">static</span> ConstructorHelpers<span class="token operator">::</span>FObjectFinder<span class="token operator">&lt;</span>USkeletalMesh<span class="token operator">></span><span class="token function">AllySkeletalMeshAsset</span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">static</span> ConstructorHelpers<span class="token operator">::</span>FObjectFinder<span class="token operator">&lt;</span>UAnimBlueprint<span class="token operator">></span><span class="token function">AllyAnimBlueprint</span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"AnimBlueprint'/Game/Blueprints/PlayerAnimBlueprint.PlayerAnimBlueprint'"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set the SkeletalMeshComponent to the Character's mesh and adjust its properties.</span>
+	AllySkeletalMesh <span class="token operator">=</span> <span class="token function">GetMesh</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	AllySkeletalMesh<span class="token operator">-></span><span class="token function">SetSkeletalMesh</span><span class="token punctuation">(</span>AllySkeletalMeshAsset<span class="token punctuation">.</span>Object<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	AllySkeletalMesh<span class="token operator">-></span><span class="token function">SetRelativeLocationAndRotation</span><span class="token punctuation">(</span><span class="token function">FVector</span><span class="token punctuation">(</span><span class="token number">0.f</span><span class="token punctuation">,</span> <span class="token number">0.f</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">90.f</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">FRotator</span><span class="token punctuation">(</span><span class="token number">0.f</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">90.f</span><span class="token punctuation">,</span> <span class="token number">0.f</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	AllySkeletalMesh<span class="token operator">-></span><span class="token function">SetAnimInstanceClass</span><span class="token punctuation">(</span>AllyAnimBlueprint<span class="token punctuation">.</span>Object<span class="token operator">-></span>GeneratedClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set the initial speed to the `WalkSpeed`.</span>
+	<span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>MaxWalkSpeed <span class="token operator">=</span> WalkSpeed<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when the AllyCharacter is created.
+ */</span>
+<span class="token keyword">void</span> AAllyCharacter<span class="token operator">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	Super<span class="token operator">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when a component enters the AllyCharacter's box collider.
+ */</span>
+<span class="token keyword">void</span> AAllyCharacter<span class="token operator">::</span><span class="token function">OnComponentEnterBoxCollider</span><span class="token punctuation">(</span>UPrimitiveComponent<span class="token operator">*</span> OverlappedComp<span class="token punctuation">,</span> AActor<span class="token operator">*</span> OtherActor<span class="token punctuation">,</span> UPrimitiveComponent<span class="token operator">*</span> OtherComp<span class="token punctuation">,</span> int32 OtherBodyIndex<span class="token punctuation">,</span> <span class="token keyword">bool</span> bFromSweep<span class="token punctuation">,</span> <span class="token keyword">const</span> FHitResult<span class="token operator">&amp;</span> SweepResult<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Return early if anything is null so we can avoid a potential crash.</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>OtherActor <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>OtherActor <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>OtherComp <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called to make the AllyCharacter sprint.
+ */</span>
+<span class="token keyword">void</span> AAllyCharacter<span class="token operator">::</span><span class="token function">SprintStart</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	bIsSprinting <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>MaxWalkSpeed <span class="token operator">=</span> SprintSpeed<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called to make the AllyCharacter stop sprinting.
+ */</span>
+<span class="token keyword">void</span> AAllyCharacter<span class="token operator">::</span><span class="token function">SprintStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	bIsSprinting <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>MaxWalkSpeed <span class="token operator">=</span> SprintSpeed<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Now make sure that this saves and compiles but there's nothing to test yet as we haven't set up the AIController for the AllyCharacter yet.</p>
+<h2 id="allyaicontroller"><a href="#allyaicontroller" aria-hidden="true"><span class="icon icon-link"></span></a><strong>AllyAIController</strong></h2>
+<p>The AllyAIController is going to be used to move the AllyCharacter to where it needs to be. This controller will evolve as we add the follow functionality and then leading functionality but let's see what we need for the basics:</p>
+<ul>
+<li>We need to keep a reference to the AllyCharacter. Unlike the PlayerCharacter reference in the AllyCharacter this one will not have to be assigned manually.</li>
+<li>We need to override <code>OnBeginPlay</code> as we'll add some starting logic to make the AllyCharacter move to the PlayerCharacter right away.</li>
+<li>We need to override <code>OnPossess</code> to make the above possible.</li>
+<li>We need to override <code>OnMoveCompleted</code> so that we can issue move commands consecutively instead of stacking them for better performance.</li>
+</ul>
+<p>So let's get started and create a new C++ class with a base parent of AIController and name it AllyAIController. I put this class in the Ally folder alongside AllyCharacter.</p>
+<p>Now let's get on to defining the variable and method we discussed above in the header:</p>
+<p><strong>AllyAIController.h</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"CoreMinimal.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AIController.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AllyAIController.generated.h"</span></span>
+
+<span class="token comment">/**
+ * The AllyAIController controls the movement and behavior of the AllyCharacter.
+ */</span>
+<span class="token function">UCLASS</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">FOLLOWLEADAI_API</span> AAllyAIController <span class="token operator">:</span> <span class="token keyword">public</span> AAIController
+<span class="token punctuation">{</span>
+	<span class="token function">GENERATED_BODY</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token function">AAllyAIController</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">protected</span><span class="token operator">:</span>
+	<span class="token comment">// A reference to the AllyCharacter.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadOnly<span class="token punctuation">,</span> Category <span class="token operator">=</span> AI<span class="token punctuation">)</span>
+	<span class="token keyword">class</span> <span class="token class-name">AAllyCharacter</span><span class="token operator">*</span> AllyCharacter<span class="token punctuation">;</span>
+
+<span class="token keyword">protected</span><span class="token operator">:</span>
+	<span class="token comment">/**
+	 * Called when the AllyAIController takes over the AllyCharacter.
+	 *
+	 * @param AllyPawn The AllyCharacter pawn.
+	 */</span>
+	<span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">OnPossess</span><span class="token punctuation">(</span>APawn<span class="token operator">*</span> AllyPawn<span class="token punctuation">)</span> override<span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called when a move request has been completed.
+	 */</span>
+	<span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">OnMoveCompleted</span><span class="token punctuation">(</span>FAIRequestID RequestID<span class="token punctuation">,</span> <span class="token keyword">const</span> FPathFollowingResult<span class="token operator">&amp;</span> Result<span class="token punctuation">)</span> override<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Now in the cpp file we assign the reference to the AllyCharacter in <code>OnPossess</code> and create the <code>OnMoveCompleted</code> method but leave it empty for now:</p>
+<p><strong>AllyAIController.cpp</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AllyAIController.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AllyCharacter.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"../Player/PlayerCharacter.h"</span></span>
+
+<span class="token comment">/**
+ * Sets up the default values for the AllyAIController.
+ */</span>
+AAllyAIController<span class="token operator">::</span><span class="token function">AAllyAIController</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Starts the AI logic for this AIController as soon as the AllyCharacter</span>
+	<span class="token comment">// is taken over so that we can issue commands immediately.</span>
+	bStartAILogicOnPossess <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when the AllyAIController takes over the AllyCharacter.
+ *
+ * @param AllyPawn The AllyCharacter pawn.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">OnPossess</span><span class="token punctuation">(</span>APawn<span class="token operator">*</span> AllyPawn<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	Super<span class="token operator">::</span><span class="token function">OnPossess</span><span class="token punctuation">(</span>AllyPawn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Attempt to cast the Pawn that was taken over to an AllyCharacter and if</span>
+	<span class="token comment">// successful then we assign it to our `AllyCharacter` variable.</span>
+	AAllyCharacter<span class="token operator">*</span> Ally <span class="token operator">=</span> Cast<span class="token operator">&lt;</span>AAllyCharacter<span class="token operator">></span><span class="token punctuation">(</span>AllyPawn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>Ally <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> AllyCharacter <span class="token operator">=</span> Ally<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Save and compile then and then let's move on to creating the states so we can expand on our AllyAIController and actually have it control the AllyCharacter.</p>
+<h2 id="making-the-allycharacter-follow-the-playercharacter"><a href="#making-the-allycharacter-follow-the-playercharacter" aria-hidden="true"><span class="icon icon-link"></span></a><strong>Making the AllyCharacter Follow the PlayerCharacter</strong></h2>
+<p>So first, we want to make the AllyCharacter follow the PlayerCharacter. While this is not very complex and we won't get into crazy detail there's some things we have to account for:</p>
+<ul>
+<li>We need to define the two states that the AllyCharacter can be in, FOLLOW and LEAD and then we need to create a variable to keep track of the AllyCharacter's current state.</li>
+<li>We need variables for the minimum and maximum distance that the AllyCharacter should be from the PlayerCharacter. This is used to find a random value between the two that denotes how far away the AllyCharacter stands from the PlayerCharacter.</li>
+<li>We need a variable for the maximum distance away the PlayerCharacter can be from the AllyCharacter before the AllyCharacter starts sprinting to catch up to the PlayerCharacter.</li>
+<li>We need to create a timer that will repeat and and check to see if the PlayerCharacter is moving so that we know when to make the AllyCharacter move. This is used to keep constant calls to <code>MoveToActor</code> out of <code>Tick</code> and increase performance/gameplay greatly.</li>
+<li>We also want to create a timer that will track whether we need to sprint or not. This could go in <code>Tick</code> but we want to avoid putting stuff in <code>Tick</code> especially if it's something that doesn't need to be run every frame.</li>
+</ul>
+<p>Let's get into the header file for the AllyCharacter and define the variables we discussed above:</p>
+<p><strong>AllyCharacter.h</strong></p>
+<p>Note that the <code>AllyStates</code> enum goes above the class declaration.</p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"CoreMinimal.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/Character.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AllyCharacter.generated.h"</span></span>
+
+<span class="token comment">/**
+ * The states that the AllyCharacter can be in.
+ */</span>
+<span class="token function">UENUM</span><span class="token punctuation">(</span>BlueprintType<span class="token punctuation">)</span>
+<span class="token keyword">enum</span> <span class="token class-name">class</span> AllyStates <span class="token operator">:</span> uint8 <span class="token punctuation">{</span>
+	FOLLOW	<span class="token function">UMETA</span><span class="token punctuation">(</span>DisplayName <span class="token operator">=</span> <span class="token string">"FOLLOW"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+	LEAD	<span class="token function">UMETA</span><span class="token punctuation">(</span>DisplayName <span class="token operator">=</span> <span class="token string">"LEAD"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>Then in the <code>public</code> section:</p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">// The current state of the AllyCharacter.</span>
+<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadOnly<span class="token punctuation">)</span>
+AllyStates State <span class="token operator">=</span> AllyStates<span class="token operator">::</span>FOLLOW<span class="token punctuation">;</span>
+
+<span class="token comment">// The minimum distance the AllyCharacter should be from the PlayerCharacter.</span>
+<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Ally<span class="token punctuation">)</span>
+<span class="token keyword">float</span> MinDistanceFromPlayer <span class="token operator">=</span> <span class="token number">100.f</span><span class="token punctuation">;</span>
+
+<span class="token comment">// The maximum distance the AllyCharacter should be from the PlayerCharacter.</span>
+<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Ally<span class="token punctuation">)</span>
+<span class="token keyword">float</span> MaxDistanceFromPlayer <span class="token operator">=</span> <span class="token number">500.f</span><span class="token punctuation">;</span>
+
+<span class="token comment">// The maximum distance the AllyCharacter can be from the PlayerCharacter before</span>
+<span class="token comment">// they start sprinting to catch up to the PlayerCharacter.</span>
+<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Ally<span class="token punctuation">)</span>
+<span class="token keyword">float</span> MaxDistanceFromPlayerBeforeSprint <span class="token operator">=</span> MaxDistanceFromPlayer <span class="token operator">+</span> <span class="token number">100.f</span><span class="token punctuation">;</span></code></pre>
+<p>Now in the AllyAIController we define the timers and the methods to respond to those timers:</p>
+<p><strong>AllyAIController.h</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token keyword">protected</span><span class="token operator">:</span>
+	<span class="token comment">// A reference to the AllyCharacter.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadOnly<span class="token punctuation">,</span> Category <span class="token operator">=</span> AI<span class="token punctuation">)</span>
+	<span class="token keyword">class</span> <span class="token class-name">AAllyCharacter</span><span class="token operator">*</span> AllyCharacter<span class="token punctuation">;</span>
+
+	<span class="token comment">// The repeating timer used to manage the AllyCharacter's sprint state.</span>
+	FTimerHandle AllySprintTimer<span class="token punctuation">;</span>
+
+	<span class="token comment">// The repeating timer used to make the AllyCharacter follow the PlayerCharacter.</span>
+	FTimerHandle AllyFollowTimer<span class="token punctuation">;</span>
+
+<span class="token keyword">protected</span><span class="token operator">:</span>
+	<span class="token comment">/**
+	 * Called when the AllyAIController takes over the AllyCharacter.
+	 *
+	 * @param AllyPawn The AllyCharacter pawn.
+	 */</span>
+	<span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">OnPossess</span><span class="token punctuation">(</span>APawn<span class="token operator">*</span> AllyPawn<span class="token punctuation">)</span> override<span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called when a move request has been completed.
+	 */</span>
+	<span class="token keyword">virtual</span> <span class="token keyword">void</span> <span class="token function">OnMoveCompleted</span><span class="token punctuation">(</span>FAIRequestID RequestID<span class="token punctuation">,</span> <span class="token keyword">const</span> FPathFollowingResult<span class="token operator">&amp;</span> Result<span class="token punctuation">)</span> override<span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called to move the AllyCharacter to the PlayerCharacter.
+	 */</span>
+	<span class="token keyword">void</span> <span class="token function">MoveToPlayerCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called by the `AllyFollowTimer` to check to see if the PlayerCharacter is
+     * is moving or not.
+	 */</span>
+	<span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">void</span> <span class="token function">CheckIfPlayerIsMoving</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">/**
+	 * Called by the `AllySprintTimer` to make the AllyCharacter start or stop sprinting.
+	 */</span>
+	<span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token keyword">void</span> <span class="token function">ManageAllySprint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>And now in the cpp file we have to create the <code>MoveToPlayerCharacter</code>, <code>CheckIfPlayerIsMoving</code> and <code>ManageAllySprint</code> methods. Let's go over each of these methods in detail:</p>
+<p><strong>MoveToPlayerCharacter</strong></p>
+<ul>
+<li>Get a random float in between the <code>MinDistanceFromPlayer</code> and <code>MaxDistanceFromPlayer</code> to pass as the acceptance radius for the <code>MoveToActor</code> call.</li>
+<li>Call <code>MoveToActor</code> to move the AllyCharacter to the PlayerCharacter passing in the float from above as the second parameter.</li>
+</ul>
+<p><strong>BeginPlay</strong></p>
+<ul>
+<li>Here we just call <code>MoveToPlayerCharacter</code> to make the AllyCharacter follow the PlayerCharacter right away.</li>
+</ul>
+<p><strong>OnMoveCompleted</strong></p>
+<ul>
+<li>This method is called anytime a move command has completed which for us is after a call to <code>MoveToPlayerCharacter</code>.</li>
+<li>Check to see if the AllyCharacter is in a FOLLOW state and if so we get the AllyCharacter's velocity.</li>
+<li>If the velocity above is greater than zero, we call <code>MoveToPlayerCharacter</code> to keep the AllyCharacter moving to the PlayerCharacter.</li>
+<li>If the velocity is zero, we set the <code>AllyFollowTimer</code> which on an interval calls <code>CheckIfPlayerIsMoving</code> so see if the PlayerCharacter is moving so the AllyCharacter can move towards them again. This is necessary because after the PlayerCharacter stops and in turn the AllyCharacter stops, <code>OnMoveCompleted</code> will stop being called so we need to set up a timer to keep checking if we need to restart the movement with <code>MoveToPlayerCharacter</code> which in turn will start calling <code>OnMoveCompleted</code> again.</li>
+</ul>
+<p><strong>CheckIfPlayerIsMoving</strong></p>
+<ul>
+<li>Get the velocity of the PlayerCharacter.</li>
+<li>If the velocity is above zero, we want to clear the <code>AllyFollowTimer</code> as we no longer need to check if the PlayerCharacter is moving. We then set the <code>AllyFollowTimer</code> which will repeatedly run the <code>ManageAllySprint</code> method to check if the AllyCharacter is far from the PlayerCharacter and should sprint to catch up. Lastly we call the <code>MoveToPlayCharacter</code> method to move the AllyCharacter to the PlayerCharacter again.</li>
+</ul>
+<p><strong>ManageAllySprint</strong></p>
+<ul>
+<li>Get the distance from the AllyCharacter to the PlayerCharacter.</li>
+<li>If the distance from above is greater than or equal to the <code>MaxDistanceFromPlayerBeforeSprint</code> and the AllyCharacter currently isn't sprinting then we want to set the AllyCharacter to sprint.</li>
+<li>Otherwise if the distance is less than the <code>MaxDistanceFromPlayerBeforeSprint</code> and the AllyCharacter is currently sprinting then we set the AllyCharacter to not sprint.</li>
+</ul>
+<p>So now let's implement this in the AllyAIController cpp file:</p>
+<p><strong>AllyAIController.cpp</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AllyAIController.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AllyCharacter.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"../Player/PlayerCharacter.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Tasks/AITask_MoveTo.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/Character.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Kismet/GameplayStatics.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Kismet/KismetMathLibrary.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Navigation/PathFollowingComponent.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/CharacterMovementComponent.h"</span></span>
+
+<span class="token comment">/**
+ * Sets up the default values for the AllyAIController.
+ */</span>
+AAllyAIController<span class="token operator">::</span><span class="token function">AAllyAIController</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Starts the AI logic for this AIController as soon as the AllyCharacter</span>
+	<span class="token comment">// is taken over so that we can issue commands immediately.</span>
+	bStartAILogicOnPossess <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when the AllyAIController starts.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	Super<span class="token operator">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Move the AllyCharacter to the PlayerCharacter from the start.</span>
+	<span class="token function">MoveToPlayerCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when the AllyAIController takes over the AllyCharacter.
+ *
+ * @param AllyPawn The AllyCharacter pawn.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">OnPossess</span><span class="token punctuation">(</span>APawn<span class="token operator">*</span> AllyPawn<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	Super<span class="token operator">::</span><span class="token function">OnPossess</span><span class="token punctuation">(</span>AllyPawn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Attempt to cast the Pawn that was taken over to an AllyCharacter and if</span>
+	<span class="token comment">// successful then we assign it to our `AllyCharacter` variable.</span>
+	AllyCharacter <span class="token operator">=</span> Cast<span class="token operator">&lt;</span>AAllyCharacter<span class="token operator">></span><span class="token punctuation">(</span>AllyPawn<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when a move request has been completed.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">OnMoveCompleted</span><span class="token punctuation">(</span>FAIRequestID RequestID<span class="token punctuation">,</span> <span class="token keyword">const</span> FPathFollowingResult<span class="token operator">&amp;</span> Result<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	Super<span class="token operator">::</span><span class="token function">OnMoveCompleted</span><span class="token punctuation">(</span>RequestID<span class="token punctuation">,</span> Result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>State <span class="token operator">==</span> AllyStates<span class="token operator">::</span>FOLLOW<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token comment">// Check to see if the AllyCharacter is moving with a simple velocity check.</span>
+		<span class="token keyword">bool</span> bIsAllyCharacterMoving <span class="token operator">=</span> AllyCharacter<span class="token operator">-></span><span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>Velocity<span class="token punctuation">.</span><span class="token function">Size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0.f</span><span class="token punctuation">;</span>
+
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>bIsAllyCharacterMoving<span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			<span class="token comment">// If the AllyCharacter is moving then it means that the PlayerCharacter is still moving</span>
+			<span class="token comment">// so we call `MoveToPlayerCharacter` to keep moving towards the PlayerCharacter.</span>
+			<span class="token function">MoveToPlayerCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">else</span>
+		<span class="token punctuation">{</span>
+			UWorld<span class="token operator">*</span> World <span class="token operator">=</span> <span class="token function">GetWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>World <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+			<span class="token comment">// Otherwise if the AllyCharacter is no longer moving then `OnMoveCompleted` will not run</span>
+			<span class="token comment">// again so we need to set up a repeating timer that checks to see if the PlayerCharacter</span>
+			<span class="token comment">// has started moving again and if so we cancel this timer and call `MoveToPlayerCharacter`</span>
+			<span class="token comment">// which just restarts this whole process.</span>
+			World<span class="token operator">-></span><span class="token function">GetTimerManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">SetTimer</span><span class="token punctuation">(</span>AllyFollowTimer<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AAllyAIController<span class="token operator">::</span>CheckIfPlayerIsMoving<span class="token punctuation">,</span> <span class="token number">0.05f</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			World<span class="token operator">-></span><span class="token function">GetTimerManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ClearTimer</span><span class="token punctuation">(</span>AllySprintTimer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called to move the AllyCharacter to the PlayerCharacter.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">MoveToPlayerCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Return early if the PlayerCharacter hasn't been assigned to the AllyCharacter.</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>PlayerCharacter <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Get a random value between `MinDistanceFromPlayer` and `MaxDistanceFromPlayer` to use</span>
+	<span class="token comment">// as the second parameter.</span>
+	<span class="token keyword">float</span> AcceptanceRadius <span class="token operator">=</span> UKismetMathLibrary<span class="token operator">::</span><span class="token function">RandomFloatInRange</span><span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>MinDistanceFromPlayer<span class="token punctuation">,</span> AllyCharacter<span class="token operator">-></span>MaxDistanceFromPlayer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Move to the PlayerCharacter within the AcceptanceRadius.</span>
+	<span class="token function">MoveToActor</span><span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>PlayerCharacter<span class="token punctuation">,</span> AcceptanceRadius<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called by the `AllyFollowTimer` to check to see if the PlayerCharacter is
+ * is moving or not.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">CheckIfPlayerIsMoving</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Check to see if the PlayerCharacter is moving by a simple velocity check.</span>
+	<span class="token keyword">bool</span> bIsPlayerCharacterMoving <span class="token operator">=</span> AllyCharacter<span class="token operator">-></span>PlayerCharacter<span class="token operator">-></span><span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>Velocity<span class="token punctuation">.</span><span class="token function">Size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0.f</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>bIsPlayerCharacterMoving<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		UWorld<span class="token operator">*</span> World <span class="token operator">=</span> <span class="token function">GetWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>World <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+		<span class="token comment">// Clear the timer as the movement is going to get handled by the `OnMoveCompleted`</span>
+		<span class="token comment">// method until the AllyCharacter stops moving again.</span>
+		World<span class="token operator">-></span><span class="token function">GetTimerManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ClearTimer</span><span class="token punctuation">(</span>AllyFollowTimer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token comment">// Set the timer that manages the AllyCharacter's movement properties such as walking</span>
+		<span class="token comment">// and sprinting.</span>
+		World<span class="token operator">-></span><span class="token function">GetTimerManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">SetTimer</span><span class="token punctuation">(</span>AllySprintTimer<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AAllyAIController<span class="token operator">::</span>ManageAllySprint<span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token comment">// Call `MoveToPlayerCharacter` to start this process all over again.</span>
+		<span class="token function">MoveToPlayerCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called by the `AllySprintTimer` to make the AllyCharacter start or stop sprinting.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">ManageAllySprint</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">float</span> DistanceFromPlayerCharacter <span class="token operator">=</span> AllyCharacter<span class="token operator">-></span><span class="token function">GetDistanceTo</span><span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>PlayerCharacter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	UCharacterMovementComponent<span class="token operator">*</span> Movement <span class="token operator">=</span> AllyCharacter<span class="token operator">-></span><span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>DistanceFromPlayerCharacter <span class="token operator">>=</span> AllyCharacter<span class="token operator">-></span>MaxDistanceFromPlayerBeforeSprint <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>AllyCharacter<span class="token operator">-></span>bIsSprinting<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token comment">// If the AllyCharacter is out of the `MaxDistanceFromPlayerBeforeSprint` value then</span>
+		<span class="token comment">// we set the AllyCharacter to sprint.</span>
+		AllyCharacter<span class="token operator">-></span><span class="token function">SprintStart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>DistanceFromPlayerCharacter <span class="token operator">&lt;</span> AllyCharacter<span class="token operator">-></span>MaxDistanceFromPlayerBeforeSprint <span class="token operator">&amp;&amp;</span> AllyCharacter<span class="token operator">-></span>bIsSprinting<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token comment">// If the AllyCharacter is not out of the `MaxDistanceFromPlayerBeforeSprint` value</span>
+		<span class="token comment">// and it is sprinting then we set it back to the walking speed.</span>
+		AllyCharacter<span class="token operator">-></span><span class="token function">SprintStop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Keep in mind that above I have a mesh and skeleton loaded and if you don't update these references to your own or copy the ones from the <a href="https://github.com/robertcorponoi/unreal-follow-lead-ai" target="_blank" rel="nofollow noopener noreferrer">repo</a> your editor will crash.</p>
+<p>Ok now save and compile and let's get to testing it out. After compiling head over to your editor and drag out an instance of AllyCharacter onto the level and we'll adjust some settings.</p>
+<p>First, find the Ally tab and in the PlayerCharacter reference select the PlayerCharacter that's on the scene. If you never added the PlayerCharacter to the level then drag out instance of that as well. Last thing we have to do is find the Pawn tab in the AllyCharacter and set the Auto Possess AI option to Placed in World or Spawned and the AI Controller Class to AllyAIController like so:</p>
+<p><img class="g-image g-image--lazy g-image--loading" src="data:image/svg+xml,%3csvg fill='none' viewBox='0 0 499 218' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdefs%3e%3cfilter id='__svg-blur-09ec20b32a6a2626e43ab2dccf784503'%3e%3cfeGaussianBlur in='SourceGraphic' stdDeviation='40'/%3e%3c/filter%3e%3c/defs%3e%3cimage x='0' y='0' filter='url(%23__svg-blur-09ec20b32a6a2626e43ab2dccf784503)' width='499' height='218' xlink:href='data:image/png%3bbase64%2ciVBORw0KGgoAAAANSUhEUgAAAEAAAAAcCAYAAADRJblSAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAGL0lEQVRYw82YWU%2bUSxCG%2bT8IgqIIOAKiIDuyi%2bwgoCAQwg0kJIZgomzKjpAIqCBhiaBRhGDiDRcSDT%2bpzjxlatKMIxwnaL6Lml6nu6v6fauqv4jLly/L%2bfPnJTIyUqKioiQ6OlqFvpiYmED5f8Xms1a4a/xLibh48aIqfOvWLUlKSpK4uDiJj4%2bXCxcuhHXwUAbwskQkJyfLvXv3pKKiQrq6ulQ6Ojrkxo0biorY2NiwFsYAXldeDXDlyhVJSEiQc%2bfOCWgAASj9p4oH3zYGwICsy5hXJSIxMVHMCCiPUMc3XLp0ScXqzEPcfubb/62PNaERtMrMzNS2V0UpcPXqVSkqKpKWlha5e/eulJWVSXV1tTQ2Nkp9fb00NzcrTW7fvi2tra3aj9TU1Ehtba3cuXNH%2b5lLOzU1VddcXl6WlZUVSUlJEZ/PJ%2bx17do1T0kEPxw2IyNDSktLJT8/X%2buFhYVqFFfS09N1vKSkRKWgoEBLbjkrK0vn5OXlqcJYt6enR3p7e3UjDGCllyTCDsaB8QHAmDql%2bQSrGzWo21xKowaRA%2bjbelAAsT28KIoAwh/wBtbAn1uFCsDZqFBXV6e3D03oRyorK1W4%2baqqKu3Lzc1V5UHBzs6ObG9vS1pamqLMswbgcEDYlKEOHeB2eXl5QLjN4uJiDZkIhqLMzs5WOuAToAMGhe%2bjo6MyMzMj169f964BDJ7AGwgDa4sIBnWrm6cPRQHq/J/bR3nm2iamvBepEKAA8OYGzeFBBRABCuinDryhA/SgDSqMMg0NDUoXHCUKIy9evJD5%2bXk1iFf9QIACOTk5ynMUQlGUhNcoSokAdTMIQh2l8R82B76jLGtCgWfPnnnOAG5EOkYBgzWQduFvUMfDu9HBxtzIYEkRJchC3A09ZwCjAPEbSHP73ChJDW2cG46P26UfAfI4SYv7oMVyA8YZu3nzpjx//lwmJyf/GAH/wlC2R4ACKN7U1KReHQUwAJQA5ihF%2bAPucL29vV2VZg5KYxzmWnikn2gwMTEh09PTYkY234AEJyRu/982gq3NfscoAJyBOfAF3kDb2gZ167M6Xt8gHyzkArwqCYP4BuqUtEEF4wh1GzOD/E0juMnfsVQYR2jZG/Cmz9p4d5wgN2799NmiKGFi7dXVVU2Gvnz5Iru7u/Lp0yfZ29uTr1%2b/yvfv3%2bXw8FC%2bffsmP378kI8fP8rBwYGiC%2bNjmNP4e2YGoALUHzx4EOA%2bkLZHD9SgnwgBBe7fv6%2bPH6gCtIM3wKA8iN68eSNLS0saDsfHx5USU1NTqixKozxydHSkj6b9/X3p7u5WtBlKTAwpZ24Alw9u3U1k3D/yJ7f9uwNhGIzX2dmpxkIePnwobW1tWrfShJtHeVDFO92Sr%2bAo5PNxPvbyaT0cQ/yCAFdxu1FuACO4b2fG7Wnrbhx8CHNq/f39mgeQDs/Ozurtm2Okn7b1MT42NqZjoGZhYUFevnypwtirV6/8r8te/zni/UZKUeUxwplQAEXx/twK7348PHQA%2bggRAOgzB/ifpLwZEgNubGyooND6%2brrCnMfRhw8fNEOk//Xr1zpna2tL/QO0WVxclLm5OR1Hcea8f78tb9%2bu%2bs8aKxWViQEEhGOEkAjACxO6cHDmqWlbnzk96qfFa0PIwMCA3jDl06dPZXBwUIaHh2VoaEhL%2bhDqT5480ZxhZGQkMA5KEBACIvr6%2bpQGqam%2bYwb4UxqE9AGggMXdkGbhzu23%2bu8eOO7i9kw2AVmhUmz6SK0xMP%2bD95ZBUtJHyWOLvX2%2bZH87/KTpFwTYY8i%2bCFk2hwLAnhIkEB2oM37SG998xdramkKbELi5uanQx9MTBT5//izv3r3T0Egf8ujRIz3U48ePNTHjXFCSPVEcn1JdXeOPBvFSVo5xwosIIcMgCqMsqa9lc25JjsA4B8If8M0gVAh0wyDODwoAbcIgfIbbtHF2VvLtEGPxCY01eURxEdCQ6IAxQB90qa9vkAS/I8wvSAz7mR2SApbRcYBQmZ1B0dqnbc5cYM4HVQyGM6XEgOZcTQiXOFqMbBSw7wr2oGJN%2b1z3E7VnSIHgRdwExM3u3LHfbe4ubp/T3U/sJ4kpF2p996vyz/7wU2b3jP8BkeLKpcu7Gm4AAAAASUVORK5CYII=' /%3e%3c/svg%3e" width="499" alt="Ally Pawn Settings" data-srcset="/assets/static/allycharacter-pawn-settings.2c9df91.107f5a3c479a310b724a02cbd2c3a75e.png 499w" data-sizes="(max-width: 499px) 100vw, 499px" data-src="/assets/static/allycharacter-pawn-settings.2c9df91.107f5a3c479a310b724a02cbd2c3a75e.png"><noscript><img class="g-image g-image--lazy g-image--loaded" src="/assets/static/allycharacter-pawn-settings.2c9df91.107f5a3c479a310b724a02cbd2c3a75e.png" width="499" alt="Ally Pawn Settings"></noscript></p>
+<p>And finally make sure that you have a nav mesh that covers the bounds of your level so that the AllyCharacter can actually move.</p>
+<p><img class="g-image g-image--lazy g-image--loading" src="data:image/svg+xml,%3csvg fill='none' viewBox='0 0 1580 607' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdefs%3e%3cfilter id='__svg-blur-9a3625eb8a197f9464a8749fe2745aa0'%3e%3cfeGaussianBlur in='SourceGraphic' stdDeviation='40'/%3e%3c/filter%3e%3c/defs%3e%3cimage x='0' y='0' filter='url(%23__svg-blur-9a3625eb8a197f9464a8749fe2745aa0)' width='1580' height='607' xlink:href='data:image/png%3bbase64%2ciVBORw0KGgoAAAANSUhEUgAAAEAAAAAZCAYAAACB6CjhAAAACXBIWXMAAA7DAAAOwwHHb6hkAAALN0lEQVRYw71Z%2bVOb1xXV1Elt4y1pJpPpdLLU0%2bm001IntgGBxA4GDA4OdrN4SWrHcQLEGAzG7MgYhPZ9R0K7EAgJs%2b%2bGJH/Y6X3vk5DAkLppyQ9nPvGt95577n33PkRaYxAm6zi0WhP0egu0xhAMlhAsljGYLU6YzQEY6JzJEoHZOgELwWoJw2aNwG6b4HDYoweDXXdMQ9/9DWyKPrjHp2DU22BzBGAabIax6yYcTvrmgwq4bTaYVGroHtbCYbHDaHBAqzbAoHdA1jcMibQYNTV1qK%2bvR2VFBSrKy3Hp0iVUVlYiLy%2bXkAfxPsjNzUVpaSm/PyfnIv87NzcHUqkEIo2WDFITCSofLBoySk0OGuOw68Nwmch4ywzsphk4jdNw0W%2b3Yx4e7wbGfRvw%2bjc5fIEXAoIv4A9ucbDfwnm6J7CNMZMbHmcY44F1jLkX4PauwmnywK6zwDW%2bAvOIHC5XAhZzFMbhUVht00R8DFpdBFr9FPr79KisuoKS8stobmrEzVu30XD9U3z2%2bQ1cqqpBgbQIksJi5EuKXoK4QErP1uBy3ccoKS1HSVkFiukooWdEIwNuKFsVULdroKajtl0JQ68Z%2bg41jJ0aWIZcsD21w95rgL3PCJfSC49vjQhYI%2bfX4WMIbMCfQjCJ5N8%2bctjrXyNCtjFOZHnGV0kFq3C5l%2bH0rMHhXoPVPgercxUm83MYTM%2bhM81DrZmCUhXFqCJMmEBPlwYNn1xDV8s9tDfdRXvzXfS03SN8g9b7N9D41TU8%2bPozPG669RI6Gm%2bil%2b4dfNwIWWcTnj5pwkDHt2i68ylEo6pJqPRxqI0JqAzT0NBRZ56BwTYHE0XbTMbZxpZg96wQluH2rScd3xAcD24iwBB6sYPgzm/hGruHEeEjIryMPC8jYYWUsATn2CIcrkXY7LOw2GYp1YgEUqBOT7ZoGQkRKNWT6O3RoqHhOhnfjA5yvq3xK3LuNu7fqkfznevk/KdoIQw8uouBtgzwv%2b9A1vENZI%2b/xdCTRgx1fofh7mZ0P/waIoUyCrU6SlKLwWBI8ChYrLNk0Dzl5gJcY8tk6DJFboUMFxzwJSOdcjwYTmGLsJ3EloAUGYwIpggiz0skepIkcCUwgulbTAlm%2braRUk5viHObVGSbUj2FwX4DSsurcVFchKtX61F/tQG1V65yWVfV1FIaXEZ5ZRXOX8zbhQs5Ynx0IZfLvqb2Y35/9eU6FJWU8ZQRKUkBamKaMW4wJXgELBR9m2OBR4YZOEbRZwaP8%2bhTNJkzKceSjoYiDBsIR9bpmER4NU3MHhJYCrF3sne7iACuAlIc%2bzZPBaZEfYxSIUokTEE2aEYhFa2S4mKUlJRQUStBGRW28rIylHGUcvDrr4CiwkIUFRUSAfRyjW6KM86YZxGwUvTtzkUeGe78uOA8k3AgMIdgcB7h0CIi4WVEycnJyBo5u4FYdAvx6AvMRDcJ25iLrmEqsoBgZJuub%2b0ogSmIpRFTFKsHY5kqIALMFAQjBUPPUlJLAdLE8FRmhlRSgEIy/OdQVFT00u/Mc5nXGEQqTYxLTW9Myv/A6G8i5I9jipyeDP9AjjMCZim6cYp6FO3aBBQuN0wBHUa9zzDo6US3s5EcDmNyYiOZEoJq/CkS9qrAuchTj6Wg0SykAasDGm0MQzJLkoCiHeP3Q6ZzP3cudV7E2NUy%2bRv3yn%2bJE8Dy1ONlVX8Fk8El9Bkf4YahCJ8bi/GJ/jxqdX9Bte5dSIcvQjz6LiSaLIhVpyBWnsSHShH%2bpS/HNKkkHFkRasO%2bKhBqwU4aEAFCGrA6wAiYxtDTVyPgv4VITS8X8n%2bGCJg9kIAAOe8fi6Os76/IlotwUX4U51XHcEFzDPny46gbrkKp5hzy1a9Dqj4DifYkipVvI3f4GLrMzZidZGmwQgrY2qkF%2bxFgdwhpIKwGCa5OjY4RYD1sAjIUQLnoIEm62LJHOerxriAaWqZl0oScPnJO%2bQbylWfwRUsWbj/Kwj/bj%2bCBJg/1jmzkKo4QAadRMvwOKvrfQ6nsD5CoTuKZRkvvWCMVrFIKvEgT4MuoA0R6igBzBgFaXRzPDo%2bA2C4FWG3zvBg5eAFkBLB1ewGx8Dq%2bG7yHD4eOIF9xmnAKRfIThOOQKo9T5I%2bhgIFSgBFwqfMsCpVvQkJqyFMfR2nfn%2bBxT1M9WCYC1oQO8QAFWH5dBcQyFDDL2bfvUYDfP4cAta%2bXu2hdlb%2bO/NEzECtOIE91HGL1CXL%2bBCdAQkeGAjWRoDrNjwUU/UL1W8hRvoYv5ZcwSe1xKDiX7BDXhaaIFUH30p4aMJOuAYdJAF8FaL3dvwiukHGLCAcXiSQPLnS8hTxlFvLkJ7kCCpSnKBUo%2bkSEhKIuUZ8kh7NI8uS8ioigYihV/Y6OdE3zJpGQhW5jK6ajPyHgn003RAcQoP81iuDPLYNOTsAM5e46Wvraca7/txDLTyNv5AQdCaMUYUoHieoNrgKJjqJtfBOFpjOEUxz5WlLJ6FGIB7Nw/snryP7yKBTDSsQiM/B553mBZanm5Mvgwv%2b8DP4CApjEYkIjRASYrXNCI8T6AOrTx8cTCFKErrSW49wzEUXzDcpzAjkrMTCwZe8o8qna5/Udx0ePjiD73ms4d%2bMUPrr2Di7Uvg9xdTYqrpTi2vXPcfOL%2bxgZ1lM/kSD5LwkF0LO3HX6ebIczG6FDIoB3gqwV3tMJ2qgpcbmeU/7PQ68NIqfp98gZIMceHsHf7v8G/7idheyGM/h79ds4X3kWkuocVNVV4XrDTdz9qhWP24YxIrPBoA7RGPycrwBT0XXEpjYxQW2y3zd/4BLIVwBTgtcmtWaST4bpTvD/TcCuWWBmpw5YHYtwOycQCSTQ2y1DdsGfUVCex%2bfphvpbuHenE52PFBgetMGojcBLRZI5OB3bRCKxhZmZHxGPb2MqtoEIdYKBEBuP1/hozNpqBk8y%2brtmgV0FMHMWMB0OAQqauVXEslAH4jz3BBXQJOiMw%2b%2bJwGKhaVEdxJhrjtpf6gmox49NkbPTW4gRJifXEZ5Yp8FokzvKnU2OwXzN58eNdPfnE3qLVPFzsujvkr8wB7ACqFJPgAVJNnBIBIwq6QM0cqbSIFMFdsccOT1NdWCeUmGRqvYiN1yYDVLT4QZf0/m%2bQGgPko6nN0bSU6CwH7As7Aew4scnwVT0E8n9gEm%2bH8BG9sEB4yERoKAP0EdYrrHlcLcKWC2g4kRLomOMpEoREzrD1fSOUCBjRyi4G75AEv71pPQznE9VfpfgvJWcT0%2bBafkrlMKO0EC/4XAI6JaFIR8NpUngK8I0N0RQAhHhYM3RPDeWGS1Miak5YTVDEQIxO7%2bT19hmSspp184u0AIpbJ7L3kKyN1ko8qY4qXCaj%2bdsI4Q5L5cHMSIPoa9XJxBwwFT3KtiXgKGRCd5p6fQJvh9ntrBosJxkEWI5yio1FazkJqgvsAV/aJvyne36/IBQ5Eea9AgTDD8l8eMO2PVQ5Ad%2bb4Ce4xum1A2yd7HNVdZqu9yrVAeWiZAl%2bvYC2TBHaTBDNsX5CqBSp5dBqVTKwRxKHV812pnPpI6iB809aHnQg9aWPrS1DqC9bRAd7TI87hjCk8fP0PVkGN1dI%2bjplqO3h9A7StEYRX%2bfgmOgX8kxOKBKQplG8hpD6n72LH8Pva%2bH3ttN7%2b/qfEbfGqJvPkXHIxnZMIC2h/1kUy9avu/Gg%2b97cP/rZk5ARUUl3wavqKjY2RJnW97/CWwXiT1TVVWF8vJy/pudF/3xjx8gjfdfxgfv44N98d4vxMvvYt/Y99tJu86eFY5isZj/T4ChtrYWDQ0NqKureyXpSyUSVFfX4JOGa/TsZf4ORsa/Afc1xs9yvRFNAAAAAElFTkSuQmCC' /%3e%3c/svg%3e" width="1580" alt="Navmesh" data-srcset="/assets/static/navmesh.82a2fbd.5d07ee812d864b7c4981d7a1968d650a.png 480w, /assets/static/navmesh.cbab2cf.5d07ee812d864b7c4981d7a1968d650a.png 1024w, /assets/static/navmesh.00bdde2.5d07ee812d864b7c4981d7a1968d650a.png 1580w" data-sizes="(max-width: 1580px) 100vw, 1580px" data-src="/assets/static/navmesh.00bdde2.5d07ee812d864b7c4981d7a1968d650a.png"><noscript><img class="g-image g-image--lazy g-image--loaded" src="/assets/static/navmesh.00bdde2.5d07ee812d864b7c4981d7a1968d650a.png" width="1580" alt="Navmesh"></noscript></p>
+<p>Now if you have all that set up and press play you sould see the AllyCharacter following the PlayerCharacter and if you sprint as the PlayerCharacter you'll notice that at a certain distance the AllyCharacter will also start to sprint to catch up to you and then it'll go back to walking when it's near the PlayerCharacter again.</p>
+<p>Of course this is pretty simple but it handles fluid AI movement without overlapping logic in <code>Tick</code>.</p>
+<h2 id="making-the-allycharacter-lead-the-playercharacter"><a href="#making-the-allycharacter-lead-the-playercharacter" aria-hidden="true"><span class="icon icon-link"></span></a><strong>Making the AllyCharacter Lead the PlayerCharacter</strong></h2>
+<p>Now that we have the AllyCharacter following the PlayerCharacter, let's work on having the AllyCharacter lead the PlayerCharacter. We're going to accomplish this by setting up one or more waypoints that the AllyCharacter goes between. We'll also set it up so that if the PlayerCharacter gets too far away from the AllyCharacter then the AllyCharacter will stop and wait for the PlayerCharacter to get closer before proceeding.</p>
+<p>So to get started on this, we need to create the waypoints that the AllyCharacter will use for navigation when leading. These Waypoints will need:</p>
+<ul>
+<li>A <code>UBoxComponent</code> to act as a box collider so that the AllyCharacter knows when it has come to a waypoint.</li>
+<li>A variable that tracks what number waypoint this is. This is needed as the waypoints will be found automatically by the AllyCharacter and they will be sorted by their index.</li>
+</ul>
+<p>So let's get started by creating a new C++ class that has a base parent of Actor and name it WaypointActor and let's get into defining the properties and methods we need in the header file:</p>
+<p><strong>WaypointActor.h</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">pragma</span> once</span>
+
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"CoreMinimal.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/Actor.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"WaypointActor.generated.h"</span></span>
+
+<span class="token function">UCLASS</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">FOLLOWLEADAI_API</span> AWaypointActor <span class="token operator">:</span> <span class="token keyword">public</span> AActor
+<span class="token punctuation">{</span>
+	<span class="token function">GENERATED_BODY</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	
+<span class="token keyword">public</span><span class="token operator">:</span>	
+	<span class="token comment">// Sets default values for this actor's properties.</span>
+	<span class="token function">AWaypointActor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// The `UBoxComponent` of this WaypointActor that lets the AllyCharacter</span>
+	<span class="token comment">// know when it has arrived at this WaypointActor.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">)</span>
+	<span class="token keyword">class</span> <span class="token class-name">UBoxComponent</span><span class="token operator">*</span> WaypointBoxCollider<span class="token punctuation">;</span>
+
+	<span class="token comment">// The number waypoint that this WaypointActor is. The AllyCharacter will</span>
+	<span class="token comment">// follow waypoints in order.</span>
+	<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Waypoint<span class="token punctuation">)</span>
+	int32 WaypointNumber <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>And in the cpp file we just create the box collider and set its initial extents:</p>
+<p><strong>WaypointActor.cpp</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"WaypointActor.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Components/BoxComponent.h"</span></span>
+
+<span class="token comment">/**
+ * Sets the default values for the WaypointActor.
+ */</span>
+AWaypointActor<span class="token operator">::</span><span class="token function">AWaypointActor</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Create the box collider, set its default extents to something we can see,</span>
+	<span class="token comment">// and then attach it to the RootComponent.</span>
+	WaypointBoxCollider <span class="token operator">=</span> CreateDefaultSubobject<span class="token operator">&lt;</span>UBoxComponent<span class="token operator">></span><span class="token punctuation">(</span><span class="token function">TEXT</span><span class="token punctuation">(</span><span class="token string">"WaypointBoxCollider"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	WaypointBoxCollider<span class="token operator">-></span><span class="token function">SetBoxExtent</span><span class="token punctuation">(</span><span class="token function">FVector</span><span class="token punctuation">(</span><span class="token number">90.f</span><span class="token punctuation">,</span> <span class="token number">90.f</span><span class="token punctuation">,</span> <span class="token number">90.f</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	WaypointBoxCollider<span class="token operator">-></span><span class="token function">SetupAttachment</span><span class="token punctuation">(</span>RootComponent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>So now we'll need to hop back to our AllyCharacter and add some more variables. We'll need:</p>
+<ul>
+<li>A variable for the maximum distance away the AllyCharacter can be from the PlayerCharacter while leading before they stop and wait for the PlayerCharacter to catch up.</li>
+<li>A variable that keeps track of the WaypointActor that the AllyCharacter is currently moving towards.</li>
+<li>A variable that keeps track of the WaypointActor that the AllyCharacter should stop at.</li>
+<li>A boolean that keeps track of whether the AllyCharacter has made it to the current WaypointActor. This is used in instances where the AllyCharacter needs to go through multiple waypoints.</li>
+<li>A map that will be populated in <code>BeginPlay</code> by all of the WaypointActors in the current level.</li>
+<li>A boolean to remember if the AllyCharacter should wait for the PlayerCharacter for the current leading request.</li>
+</ul>
+<p>Let's go ahead and define these in the header:</p>
+<p><strong>AllyCharacter.h</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">// The maximum distance the PlayerCharacter can be from the AllyCharacter when</span>
+<span class="token comment">// following before the AllyCharacter waits for them to catch up.</span>
+<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>EditAnywhere<span class="token punctuation">,</span> BlueprintReadWrite<span class="token punctuation">,</span> Category <span class="token operator">=</span> Ally<span class="token punctuation">)</span>
+<span class="token keyword">float</span> MaxDistanceFromPlayerWhileLeading <span class="token operator">=</span> <span class="token number">500.f</span><span class="token punctuation">;</span>
+
+<span class="token comment">// The WaypointActor that the AllyCharacter is currently moving towards.</span>
+<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadOnly<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">AWaypointActor</span><span class="token operator">*</span> CurrentWaypoint<span class="token punctuation">;</span>
+
+<span class="token comment">// The WaypointActor that the AllyCharacter is ending at.</span>
+<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadOnly<span class="token punctuation">)</span>
+<span class="token keyword">class</span> <span class="token class-name">AWaypointActor</span><span class="token operator">*</span> EndWaypoint<span class="token punctuation">;</span>
+
+<span class="token comment">// Indicates whether the AllyCharacter has arrived at the WaypointActor marked</span>
+<span class="token comment">// as the `CurrentWaypoint` or not.</span>
+<span class="token keyword">bool</span> bIsAtCurrentWaypoint <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+<span class="token comment">// A map of all of the Waypoints in the current level.</span>
+<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>VisibleAnywhere<span class="token punctuation">,</span> BlueprintReadOnly<span class="token punctuation">)</span>
+TMap<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> AWaypointActor<span class="token operator">*</span><span class="token operator">></span> Waypoints<span class="token punctuation">;</span>
+
+<span class="token comment">// Indicates whether the AllyCharacter should wait for the PlayerCharacter when leading.</span>
+<span class="token comment">// This is set by the AllyAIController.</span>
+<span class="token keyword">bool</span> bShouldWaitForPlayerWhenLeading <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span></code></pre>
+<p>And then in the cpp file we'll start off by populating the <code>Waypoints</code> map by getting all of the WaypointActors in the level and then sorting the map by its keys. Lastly we'll add functionality to <code>OnComponentEnterBoxCollider</code> to check whether the AllyCharacter is the LEAD state and what they've collided with is a WaypointActor and if so we set <code>bIsAtCurrentWaypoint</code> to <code>true</code>.</p>
+<p>Also you'll have to include the WaypointActor header in the AllyCharacter cpp file:</p>
+<p><strong>AllyCharacter.cpp</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AllyCharacter.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"../WaypointActor.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/CharacterMovementComponent.h"</span></span></code></pre>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">/**
+ * Called when the AllyCharacter is created.
+ */</span>
+<span class="token keyword">void</span> AAllyCharacter<span class="token operator">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	Super<span class="token operator">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Get all of the WaypointActors in the level.</span>
+	TArray<span class="token operator">&lt;</span>AActor<span class="token operator">*</span><span class="token operator">></span> FoundActors<span class="token punctuation">;</span>
+	UGameplayStatics<span class="token operator">::</span><span class="token function">GetAllActorsOfClass</span><span class="token punctuation">(</span><span class="token function">GetWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> AWaypointActor<span class="token operator">::</span><span class="token function">StaticClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> FoundActors<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// For each WaypointActor we found we have to try and cast it as a WaypointActor</span>
+	<span class="token comment">// as they are found as Actors not WaypointActors. If we can successfully cast it</span>
+	<span class="token comment">// to a WaypointActor then we add it to the WaypointActors map.</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>AActor<span class="token operator">*</span> FoundActor <span class="token operator">:</span> FoundActors<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		AWaypointActor<span class="token operator">*</span> Waypoint <span class="token operator">=</span> Cast<span class="token operator">&lt;</span>AWaypointActor<span class="token operator">></span><span class="token punctuation">(</span>FoundActor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token comment">// If we can successfully cast the Actor to a WaypointActor then we add it to</span>
+		<span class="token comment">// the map with the WaypointNumber as the key and WaypointActor as the value.</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>Waypoint <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> Waypoints<span class="token punctuation">.</span><span class="token function">Add</span><span class="token punctuation">(</span>Waypoint<span class="token operator">-></span>WaypointNumber<span class="token punctuation">,</span> Waypoint<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment">// After all of the Waypoints have been added to the Waypoints map then we sort the</span>
+	<span class="token comment">// map by its keys, which are the WaypointNumbers.</span>
+	Waypoints<span class="token punctuation">.</span><span class="token function">KeySort</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> A<span class="token punctuation">,</span> <span class="token keyword">int</span> B<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> A <span class="token operator">&lt;</span> B<span class="token punctuation">;</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when a component enters the AllyCharacter's box collider.
+ */</span>
+<span class="token keyword">void</span> AAllyCharacter<span class="token operator">::</span><span class="token function">OnComponentEnterBoxCollider</span><span class="token punctuation">(</span>UPrimitiveComponent<span class="token operator">*</span> OverlappedComp<span class="token punctuation">,</span> AActor<span class="token operator">*</span> OtherActor<span class="token punctuation">,</span> UPrimitiveComponent<span class="token operator">*</span> OtherComp<span class="token punctuation">,</span> int32 OtherBodyIndex<span class="token punctuation">,</span> <span class="token keyword">bool</span> bFromSweep<span class="token punctuation">,</span> <span class="token keyword">const</span> FHitResult<span class="token operator">&amp;</span> SweepResult<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Return early if anything is null so we can avoid a potential crash.</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>OtherActor <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>OtherActor <span class="token operator">==</span> <span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>OtherComp <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Try to cast the `OtherActor` to a WaypointActor.</span>
+	AWaypointActor<span class="token operator">*</span> Waypoint <span class="token operator">=</span> Cast<span class="token operator">&lt;</span>AWaypointActor<span class="token operator">></span><span class="token punctuation">(</span>OtherActor<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// If the AllyCharacter is in the LEAD state and we were able to successfully cast the `OtherActor`</span>
+	<span class="token comment">// to a WaypointActor, then we set `bIsAtCurrentWaypoint` to `true`.</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>State <span class="token operator">==</span> AllyStates<span class="token operator">::</span>LEAD <span class="token operator">&amp;&amp;</span> Waypoint <span class="token operator">!=</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> bIsAtCurrentWaypoint <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>And that's it for the AllyCharacter for now. There's nothing to test yet so just make sure to save and compile before we move on to next part.</p>
+<p>Now since the PlayerCharacter is going to be the one issuing commands, we have to create the functionality so that the PlayerCharacter can tell the AllyCharacter to lead. This can be implemented anywhere not just the PlayerCharacter but for the purposes of this demo it'll be easier to show since we're just going to tie the lead action to an action input for the demo.</p>
+<p>So let's see what we need to add to the PlayerCharacter:</p>
+<ul>
+<li>A delegate that will be broadcast when we want the AllyCharacter to lead which in our case will be when the "Lead" action input is pressed.</li>
+<li>The above delegate is going to have 3 parameters. The <code>WaypointNumber</code> of where the AllyCharacter should start, the <code>WaypointNumber</code> of where the AllyCharacter should end, and whether the AllyCharacter should wait for the PlayerCharacter to be in <code>MaxDistanceFromPlayerWhileLeading</code> range before continuing or not.</li>
+<li>We also need to create a variable that we can use to broadcast the signal.</li>
+<li>Since we're going to ask the AllyCharacter to lead when we press the F key, we need to create a method to respond to the F key being pressed.</li>
+</ul>
+<p>Let's go ahead and define these two things in the PlayerCharacter's header. Note that the delegate goes outside of the class, I put it under the includes.</p>
+<p><strong>PlayerCharacter.h</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">// Creates a delegate that's used to tell the AllyAIController to make</span>
+<span class="token comment">// the AllyCharacter lead the way.</span>
+<span class="token function">DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams</span><span class="token punctuation">(</span>FAllyLeadRequest<span class="token punctuation">,</span> int32<span class="token punctuation">,</span> StartWaypoint<span class="token punctuation">,</span> int32<span class="token punctuation">,</span> EndWaypoint<span class="token punctuation">,</span> <span class="token keyword">bool</span><span class="token punctuation">,</span> bShouldWaitForPlayer<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">// Broadcast when the PlayerCharacter triggers an object in the level that</span>
+<span class="token comment">// that makes the AllyCharacter switch to the LEAD state or when the PlayerCharacter</span>
+<span class="token comment">// is deemed to be "lost".</span>
+<span class="token function">UPROPERTY</span><span class="token punctuation">(</span>BlueprintAssignable<span class="token punctuation">,</span> Category <span class="token operator">=</span> <span class="token string">"StateEvents"</span><span class="token punctuation">)</span>
+FAllyLeadRequest OnAllyLeadRequest<span class="token punctuation">;</span></code></pre>
+<p>Down where our other methods are defined:</p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">/**
+ * Called when the "Lead" action input is pressed.
+ */</span>
+<span class="token keyword">void</span> <span class="token function">LeadAction</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Now in the cpp file we have to create the <code>LeadAction</code> method and register it with the <code>PlayerInputComponent</code>.</p>
+<p><strong>PlayerCharacter.cpp</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">/**
+ * Called to bind functionality to input.
+ *
+ * @param PlayerInputComponent An Actor component for input bindings.
+ */</span>
+<span class="token keyword">void</span> APlayerCharacter<span class="token operator">::</span><span class="token function">SetupPlayerInputComponent</span><span class="token punctuation">(</span>UInputComponent<span class="token operator">*</span> PlayerInputComponent<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">check</span><span class="token punctuation">(</span>PlayerInputComponent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set up the methods to respond to the PlayerCharacter moving forward, backward,</span>
+	<span class="token comment">// left, and right.</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAxis</span><span class="token punctuation">(</span><span class="token string">"MoveForwardBackward"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>MoveForwardBackward<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAxis</span><span class="token punctuation">(</span><span class="token string">"MoveLeftRight"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>MoveLeftRight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set the "TurnLeftRight" and "LookUpDown" axis inputs to control the yaw and pitch</span>
+	<span class="token comment">// of the camera.</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAxis</span><span class="token punctuation">(</span><span class="token string">"TurnLeftRight"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>AddControllerYawInput<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAxis</span><span class="token punctuation">(</span><span class="token string">"LookUpDown"</span><span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>AddControllerPitchInput<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set up the methods to respond to the sprint action input being pressed and released.</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAction</span><span class="token punctuation">(</span><span class="token string">"Sprint"</span><span class="token punctuation">,</span> IE_Pressed<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>SprintStart<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAction</span><span class="token punctuation">(</span><span class="token string">"Sprint"</span><span class="token punctuation">,</span> IE_Released<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>SprintStop<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set up the method to respond to the AllyLead action input being pressed.</span>
+	PlayerInputComponent<span class="token operator">-></span><span class="token function">BindAction</span><span class="token punctuation">(</span><span class="token string">"AllyLead"</span><span class="token punctuation">,</span> IE_Pressed<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>APlayerCharacter<span class="token operator">::</span>LeadAction<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when the "Lead" action input is pressed.
+ */</span>
+<span class="token keyword">void</span> APlayerCharacter<span class="token operator">::</span><span class="token function">LeadAction</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Make the AllyCharacter lead the PlayerCharacter from the first waypoint to the</span>
+	<span class="token comment">// second waypoint and waiting for the PlayerCharacter to be in range.</span>
+	OnAllyLeadRequest<span class="token punctuation">.</span><span class="token function">Broadcast</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>And we're done with the PlayerCharacter and onto the final piece, the AllyAIController. Make sure that the above is saved and compiles and let's move on to that.</p>
+<p>Again our goal is to avoid the use of the <code>Tick</code> method so we're going to need to create a timer that runs the Waypoint movement logic. So with that said let's see what we need for the AllyAIController:</p>
+<ul>
+<li>A method named <code>MakeAllyLead</code> that'll respond to the PlayerCharacter broadcasting the signal indicating that the AllyCharacter should lead from waypoint A to waypoint B.</li>
+<li>A method named <code>MoveToWaypoint</code> that'll check to see if the AllyCharacter needs to wait for the PlayerCharacter and move to the current WaypointActor.</li>
+<li>A timer that will repeat and call the <code>MoveToWaypoint</code> method.</li>
+<li>We need to add on to the <code>OnMoveCompleted</code> method to see if the AllyCharacter is at the ending WaypointActor then it needs to put the AllyCharacter back to the FOLLOW state. If there are still more waypoints to go to then it sets the <code>CurrentWaypoint</code> property of the AllyCharacter to the next WaypointActor so it can walk to the next waypoint.</li>
+</ul>
+<p>Let's go ahead and define the above in the AllyAIController's header file:</p>
+<p><strong>AllyAIController.h</strong></p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">// The repeating timer used to make the AllyCharacter lead the PlayerCharacter.</span>
+FTimerHandle AllyLeadTimer<span class="token punctuation">;</span></code></pre>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">/**
+ * Called to move the AllyCharacter to its `CurrentWaypoint`.
+ */</span>
+<span class="token keyword">void</span> <span class="token function">MoveToWaypoint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * Called when`OnAllyLeadRequest` is broadcast to put the AllyCharacter in the LEAD
+ * state and make them move to a waypoint.
+ */</span>
+<span class="token function">UFUNCTION</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">MakeAllyLead</span><span class="token punctuation">(</span>int32 WaypointA<span class="token punctuation">,</span> int32 WaypointB<span class="token punctuation">,</span> <span class="token keyword">bool</span> bShouldWaitForPlayer<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>and now in the cpp file we create the methods defined above and add the logic we discussed:</p>
+<p><strong>AllyAIController.cpp</strong></p>
+<p>Make sure you have the following includes:</p>
+<pre class="language-cpp"><code class="language-cpp"><span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"AllyCharacter.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"../WaypointActor.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"../Player/PlayerCharacter.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Tasks/AITask_MoveTo.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/Character.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Kismet/GameplayStatics.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Kismet/KismetMathLibrary.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"Navigation/PathFollowingComponent.h"</span></span>
+<span class="token macro property">#<span class="token directive keyword">include</span> <span class="token string">"GameFramework/CharacterMovementComponent.h"</span></span></code></pre>
+<pre class="language-cpp"><code class="language-cpp"><span class="token comment">/**
+ * Called when the AllyAIController starts.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	Super<span class="token operator">::</span><span class="token function">BeginPlay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set up the response to the PlayerCharacter's `OnAllyLeadRequest` delegate.</span>
+	AllyCharacter<span class="token operator">-></span>PlayerCharacter<span class="token operator">-></span>OnAllyLeadRequest<span class="token punctuation">.</span><span class="token function">AddDynamic</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AAllyAIController<span class="token operator">::</span>MakeAllyLead<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Move the AllyCharacter to the PlayerCharacter from the start.</span>
+	<span class="token function">MoveToPlayerCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called when a move request has been completed.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">OnMoveCompleted</span><span class="token punctuation">(</span>FAIRequestID RequestID<span class="token punctuation">,</span> <span class="token keyword">const</span> FPathFollowingResult<span class="token operator">&amp;</span> Result<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	Super<span class="token operator">::</span><span class="token function">OnMoveCompleted</span><span class="token punctuation">(</span>RequestID<span class="token punctuation">,</span> Result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>State <span class="token operator">==</span> AllyStates<span class="token operator">::</span>FOLLOW<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token comment">// Check to see if the AllyCharacter is moving with a simple velocity check.</span>
+		<span class="token keyword">bool</span> bIsAllyCharacterMoving <span class="token operator">=</span> AllyCharacter<span class="token operator">-></span><span class="token function">GetCharacterMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span>Velocity<span class="token punctuation">.</span><span class="token function">Size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0.f</span><span class="token punctuation">;</span>
+
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>bIsAllyCharacterMoving<span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			<span class="token comment">// If the AllyCharacter is moving then it means that the PlayerCharacter is still moving</span>
+			<span class="token comment">// so we call `MoveToPlayerCharacter` to keep moving towards the PlayerCharacter.</span>
+			<span class="token function">MoveToPlayerCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">else</span>
+		<span class="token punctuation">{</span>
+			UWorld<span class="token operator">*</span> World <span class="token operator">=</span> <span class="token function">GetWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>World <span class="token operator">==</span> <span class="token keyword">nullptr</span><span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+			<span class="token comment">// Otherwise if the AllyCharacter is no longer moving then `OnMoveCompleted` will not run</span>
+			<span class="token comment">// again so we need to set up a repeating timer that checks to see if the PlayerCharacter</span>
+			<span class="token comment">// has started moving again and if so we cancel this timer and call `MoveToPlayerCharacter`</span>
+			<span class="token comment">// which just restarts this whole process.</span>
+			World<span class="token operator">-></span><span class="token function">GetTimerManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">SetTimer</span><span class="token punctuation">(</span>AllyFollowTimer<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AAllyAIController<span class="token operator">::</span>CheckIfPlayerIsMoving<span class="token punctuation">,</span> <span class="token number">0.05f</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			World<span class="token operator">-></span><span class="token function">GetTimerManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ClearTimer</span><span class="token punctuation">(</span>AllySprintTimer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>State <span class="token operator">==</span> AllyStates<span class="token operator">::</span>LEAD<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>CurrentWaypoint <span class="token operator">==</span> AllyCharacter<span class="token operator">-></span>EndWaypoint <span class="token operator">&amp;&amp;</span> AllyCharacter<span class="token operator">-></span>bIsAtCurrentWaypoint<span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			<span class="token comment">// If the AllyCharacter is at the last waypoint then we can clear the lead timer and set</span>
+			<span class="token comment">// them back to the FOLLOW state.</span>
+			<span class="token function">GetWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">GetTimerManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ClearTimer</span><span class="token punctuation">(</span>AllyLeadTimer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			AllyCharacter<span class="token operator">-></span>State <span class="token operator">=</span> AllyStates<span class="token operator">::</span>FOLLOW<span class="token punctuation">;</span>
+
+			<span class="token comment">// Set the AllyCharacter to move to the PlayerCharacter again to keep the follow loop going.</span>
+			<span class="token function">MoveToPlayerCharacter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>bIsAtCurrentWaypoint<span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			<span class="token comment">// Otherwise we set the AllyCharacter to move to the next waypoint.</span>
+			AllyCharacter<span class="token operator">-></span>CurrentWaypoint <span class="token operator">=</span> AllyCharacter<span class="token operator">-></span>Waypoints<span class="token punctuation">[</span>AllyCharacter<span class="token operator">-></span>CurrentWaypoint<span class="token operator">-></span>WaypointNumber <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+			AllyCharacter<span class="token operator">-></span>bIsAtCurrentWaypoint <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Called to move the AllyCharacter to a WaypointActor.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">MoveToWaypoint</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Make sure that this is only called when the AllyCharacter is in the</span>
+	<span class="token comment">// LEAD state.</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>State <span class="token operator">!=</span> AllyStates<span class="token operator">::</span>LEAD<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// If `AllyCharacter->bShouldWaitForPlayerWhenLeading` is true then we need to check</span>
+	<span class="token comment">// to see if the PlayerCharacter is too far from the AllyCharacter and if so then we</span>
+	<span class="token comment">// stop movement until the PlayerCharacter gets closer. Otherwise we just continue to</span>
+	<span class="token comment">// the WaypointActor.</span>
+	<span class="token keyword">float</span> AllyDistanceFromPlayer <span class="token operator">=</span> AllyCharacter<span class="token operator">-></span><span class="token function">GetDistanceTo</span><span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>PlayerCharacter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>bShouldWaitForPlayerWhenLeading <span class="token operator">&amp;&amp;</span> AllyDistanceFromPlayer <span class="token operator">>=</span> AllyCharacter<span class="token operator">-></span>MaxDistanceFromPlayerWhileLeading<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">StopMovement</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">else</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">MoveToActor</span><span class="token punctuation">(</span>AllyCharacter<span class="token operator">-></span>CurrentWaypoint<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+ * Responds to the `OnAllyLeadRequest` to put the AllyCharacter in the LEAD
+ * state and make them move to a waypoint.
+ */</span>
+<span class="token keyword">void</span> AAllyAIController<span class="token operator">::</span><span class="token function">MakeAllyLead</span><span class="token punctuation">(</span><span class="token keyword">int</span> WaypointA<span class="token punctuation">,</span> <span class="token keyword">int</span> WaypointB<span class="token punctuation">,</span> <span class="token keyword">bool</span> bShouldWaitForPlayer<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Put the AllyCharacter in the LEAD state.</span>
+	AllyCharacter<span class="token operator">-></span>State <span class="token operator">=</span> AllyStates<span class="token operator">::</span>LEAD<span class="token punctuation">;</span>
+
+	<span class="token comment">// Clear the AllyFollowTimer if the AllyCharacter was in the FOLLOW state before.</span>
+	<span class="token function">GetWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">GetTimerManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">ClearTimer</span><span class="token punctuation">(</span>AllyFollowTimer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment">// Set the AllyCharcter's `CurrentWaypoint` to `WaypointA` and `EndWaypoint` to `WaypointB`.</span>
+	AllyCharacter<span class="token operator">-></span>CurrentWaypoint <span class="token operator">=</span> AllyCharacter<span class="token operator">-></span>Waypoints<span class="token punctuation">[</span>WaypointA<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	AllyCharacter<span class="token operator">-></span>EndWaypoint <span class="token operator">=</span> AllyCharacter<span class="token operator">-></span>Waypoints<span class="token punctuation">[</span>WaypointB<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+	AllyCharacter<span class="token operator">-></span>bShouldWaitForPlayerWhenLeading <span class="token operator">=</span> bShouldWaitForPlayer<span class="token punctuation">;</span>
+
+	<span class="token comment">// Move to the next WaypointActor which could be WaypointA, WaypointB, or a WaypointActor</span>
+	<span class="token comment">// in between.</span>
+	<span class="token function">GetWorld</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">-></span><span class="token function">GetTimerManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">SetTimer</span><span class="token punctuation">(</span>AllyLeadTimer<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>AAllyAIController<span class="token operator">::</span>MoveToWaypoint<span class="token punctuation">,</span> <span class="token number">0.5f</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre>
+<p>Now save and compile and let's get to the fun part, the testing. Go ahead and drag two WaypointActors onto the scene and extend their box extents out a bit so that they cover a bigger area. Make sure that you give one of them a <code>WaypointNumber</code> of 0 and the other a <code>WaypointNumber</code> of 1. Now if you press play you'll notice the AllyCharacter following you as usual but if you press the input action for "AllyLead" (probably F if you followed what I did) then you'll see the AllyCharacter walking towards the first WaypointActor. Now if you don't follow the AllyCharacter then it'll eventually stop because you're out of range and you need to get closer before it continues towards the WaypointActor. After it gets to the first WaypointActor it should start heading for the next one. Finally when the AllyCharacter is done with the waypoints it'll go back to following the PlayerCharacter.</p>
+<p><strong>Note:</strong> If your AllyCharacter is not going towards the WaypointActors then the changes might have not been picked up so the best thing you can do is start fresh by deleting the existing PlayerCharacter and AllyCharacter and drag out new instances of them. Then set the reference to the PlayerCharacter in the AllyCharacter and set the AIController class to AllyAIController class like we did above.</p>
+<h2 id="conclusion"><a href="#conclusion" aria-hidden="true"><span class="icon icon-link"></span></a><strong>Conclusion</strong></h2>
+<p>Well that's all for this tutorial, I might come back to this in a future tutorial and expand it to show how the AllyAIController can be used to help the PlayerCharacter in combat but this is a good starting template for any projects you might have that need similar functionality. If you would like to see a specific topic for the next article don't hesitate to send me a message and I'll do my best to make it happen. Also make sure to check out the <a href="https://github.com/robertcorponoi/unreal-follow-lead-ai" target="_blank" rel="nofollow noopener noreferrer">repo</a> for an example of everything we created in this tutorial along with animation classes and blueprints.</p>
+</div><div class="post__footer"><div class="post-tags"><a href="/tag/unreal/" class="post-tags__link">unreal</a><a href="/tag/ai/" class="post-tags__link">ai</a><a href="/tag/follow/" class="post-tags__link">follow</a><a href="/tag/lead/" class="post-tags__link">lead</a></div></div><div class="author post__author"><img alt="Author image" src="data:image/svg+xml,%3csvg fill='none' viewBox='0 0 328 328' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cdefs%3e%3cfilter id='__svg-blur-01a977fbf7b567b5530e68a6b3d8c4c9'%3e%3cfeGaussianBlur in='SourceGraphic' stdDeviation='40'/%3e%3c/filter%3e%3c/defs%3e%3cimage x='0' y='0' filter='url(%23__svg-blur-01a977fbf7b567b5530e68a6b3d8c4c9)' width='328' height='328' xlink:href='data:image/jpeg%3bbase64%2c/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCABAAEADASIAAhEBAxEB/8QAGwAAAwADAQEAAAAAAAAAAAAABQYHAwQIAgH/xAAzEAACAQMDAQUGBgIDAAAAAAABAgMEBREAEiEGBxMxQVEiMmFxgaEUFSRCkbEWF1Jy0f/EABoBAAIDAQEAAAAAAAAAAAAAAAMFAQIEBgD/xAAjEQACAQUAAQQDAAAAAAAAAAABAgADBBESITEFIkFRMmFx/9oADAMBAAIRAxEAPwA9cIAwPGkLqy4wWOneokY7z7KRr4s3lqkVmApLHAAySfIahN6qpes%2bpJoYsiipmCRJ5nnBPzP9aXW9Mu36mhjiA67rO8zNuScQIPAIcZ%2bemHpbq%2btqahY5XeoIGe728sPnonRdlhkG%2bsnjiQ%2bCp7TaYKXpOisqI1NE25f3n3mPx0wqUBryQjHPYWslTBdDLHEWSeE4kiYjcujUdrJ8zpY63qloLnZurLbFtq639BXQpwjSqAVfHhkrx9M6odslFVRQTlAhkQMVznaSPDOsTe2XIggWfIzgn66%2b/k4/4N99TvtJ6sq7J1PW08QWSAKhy7SewSPABWA%2bOkqp60rZYnkUR4Xg4aUf2%2bpFJmGRIyo4TL5dwWoqhVbYTG2G9OPHUH7LKpafqqoQ4aGYNyT4YOc6vFzy9NMqDLFCACcZONR609IzWW6w1k7hpEqoldR7ojc4LfycfXRbAjYgylT7lETqBJJAtJRPON20SMwRP5Pj8hohf5Vp7GZ49kcznbge0E9Do7VdK22odKqopBM6Y7pS3Ef/AFHloddKFmJpFh3gKGZR5D0z8tOGQBeQaZY9kshsV0vUdXDEa4yzAsnfSAIxXlSFxx8PMaovZkaxelojcEZJjI5w3z5%2b%2bdeaKj7iXEcxPdngZ5A8s%2bh0fpNkMAWMYUkt9SST9zpTeAcI%2bYdeDEjHaDVU3%2bb3iOaquMbxkSNHSsANoRcHnz50p1kVJWIqw1dwnxLt2zcgEcnPPpon2gSP/sLqRkJw0XdHHkCE51p9Po0aTtK6lu9iYKPINlSdeRQqbSrElsS91UmAdJd8v9NbL7RiaLv8KWli2g95EeCpz6n%2btNNZIApycD11z/1Tfqi5XiWo2LGvMUPHOzdwT8dZLVHd9k%2bJZio/KdQ9A9TUd7twMZIaMlCjkFlHln6Y51iu0tZLVyzQRmGFSRvbgEaivYhRXK49UyRvLURU5gbMyN7j/tOPPJBH86rs0vUtCssFVQyVOw47yFS6sP7Guip76jbzMpYA88QAtL%2bGnasErGLJbhs7vXR%2bjlP4aPd4lQT9dA6ikrrjUhpaeSlpoxl93sk/ADStYr/eLVevynqfawbmKryArA%2b6c8DHl8Dpbf0mbGIZGBgnqCwS3bqW/VERQFqsR5J5wEXI%2bXhpPq6Wqs9z7tvGRlRiQTuUEeH8afhfaCmvd4inq4o5Gq2cBmxkbV5z4aEdUV9BXT0MUNRFLL36g7GyQDpalWopII5DMAY09QdU0EcM0MDtNKyMgKDgEgjOTqW9ygKDaGZRjJ50VenwSx5J15WAA5xjnOuys/TKdoCF7n7iSrdmp5lI7DrlR0N0mo6oiMzsGSQ%2bo8vvroOWJChYcEj3h56473tBKslOdrgg8HH1HodPll7VrxQUqU8%2bJ1TgF%2bDola3bbZZFOsCMGV%2b5W8AMijCP5nUI7WJ4vzGno4WDPAmXIPgSeB9tGr72t3a50ppqeCGDjHeDlv8AzU3qQ1RI8tQ5aRiSSTkk6qlsSdmGJdq4AwDNaUQA/qIllBHssfeH11kpKSmlnikgYq0bh9pPjjWvOAxIGePDOsSIy8gkHOdAufTUrA/B%2b4Wjdmn/ACf/2Q==' /%3e%3c/svg%3e" width="328" data-src="/assets/static/author.de4034a.47c56ffa8bb5f81a48029e779b4a2893.jpg" data-srcset="/assets/static/author.de4034a.47c56ffa8bb5f81a48029e779b4a2893.jpg 328w" data-sizes="(max-width: 328px) 100vw, 328px" class="author__image g-image g-image--lazy g-image--loading"><noscript><img src="/assets/static/author.de4034a.47c56ffa8bb5f81a48029e779b4a2893.jpg" class="author__image g-image g-image--loaded" width="328" alt="Author image"></noscript><div class="author__bio"><p class="author__name">Robert Corponoi</p><p class="author__intro">Self proclaimed game development ninja.</p></div><a href="https://twitter.com/robertcorponoi" target="_blank" rel="noreferrer" class="btn btn--secondary">Follow</a></div></div></main><footer class="footer"><div class="container"><ul class="soc"><li><a href="https://twitter.com/robertcorponoi" target="_blank" rel="noreferrer" title="Twitter" class="soc__icon soc__icon--twitter"><div class="soc__ir"><svg viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M419.6 168.6c-11.7 5.2-24.2 8.7-37.4 10.2 13.4-8.1 23.8-20.8 28.6-36 -12.6 7.5-26.5 12.9-41.3 15.8 -11.9-12.6-28.8-20.6-47.5-20.6 -42 0-72.9 39.2-63.4 79.9 -54.1-2.7-102.1-28.6-134.2-68 -17 29.2-8.8 67.5 20.1 86.9 -10.7-0.3-20.7-3.3-29.5-8.1 -0.7 30.2 20.9 58.4 52.2 64.6 -9.2 2.5-19.2 3.1-29.4 1.1 8.3 25.9 32.3 44.7 60.8 45.2 -27.4 21.4-61.8 31-96.4 27 28.8 18.5 63 29.2 99.8 29.2 120.8 0 189.1-102.1 185-193.6C399.9 193.1 410.9 181.7 419.6 168.6z"></path></svg></div></a></li><li><a href="https://github.com/robertcorponoi" target="_blank" rel="noreferrer" title="GitHub" class="soc__icon soc__icon--github"><div class="soc__ir"><svg viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M256 70.7c-102.6 0-185.9 83.2-185.9 185.9 0 82.1 53.3 151.8 127.1 176.4 9.3 1.7 12.3-4 12.3-8.9V389.4c-51.7 11.3-62.5-21.9-62.5-21.9 -8.4-21.5-20.6-27.2-20.6-27.2 -16.9-11.5 1.3-11.3 1.3-11.3 18.7 1.3 28.5 19.2 28.5 19.2 16.6 28.4 43.5 20.2 54.1 15.4 1.7-12 6.5-20.2 11.8-24.9 -41.3-4.7-84.7-20.6-84.7-91.9 0-20.3 7.3-36.9 19.2-49.9 -1.9-4.7-8.3-23.6 1.8-49.2 0 0 15.6-5 51.1 19.1 14.8-4.1 30.7-6.2 46.5-6.3 15.8 0.1 31.7 2.1 46.6 6.3 35.5-24 51.1-19.1 51.1-19.1 10.1 25.6 3.8 44.5 1.8 49.2 11.9 13 19.1 29.6 19.1 49.9 0 71.4-43.5 87.1-84.9 91.7 6.7 5.8 12.8 17.1 12.8 34.4 0 24.9 0 44.9 0 51 0 4.9 3 10.7 12.4 8.9 73.8-24.6 127-94.3 127-176.4C441.9 153.9 358.6 70.7 256 70.7z"></path></svg></div></a></li><li><a href="https://www.linkedin.com/in/robert-corponoi-1353a1112/" target="_blank" rel="noreferrer" title="LinkedIn" class="soc__icon soc__icon--linkedin"><div class="soc__ir"><svg viewBox="0 0 512 512" preserveAspectRatio="xMidYMid meet"><path d="M186.4 142.4c0 19-15.3 34.5-34.2 34.5 -18.9 0-34.2-15.4-34.2-34.5 0-19 15.3-34.5 34.2-34.5C171.1 107.9 186.4 123.4 186.4 142.4zM181.4 201.3h-57.8V388.1h57.8V201.3zM273.8 201.3h-55.4V388.1h55.4c0 0 0-69.3 0-98 0-26.3 12.1-41.9 35.2-41.9 21.3 0 31.5 15 31.5 41.9 0 26.9 0 98 0 98h57.5c0 0 0-68.2 0-118.3 0-50-28.3-74.2-68-74.2 -39.6 0-56.3 30.9-56.3 30.9v-25.2H273.8z"></path></svg></div></a></li></ul><span class="footer__copyright">Copyright © 2020 Robert Corponoi</span><a href="https://opensource.org/licenses/MIT" target="_blank" rel="noreferrer" class="footer__license">All Code MIT Licensed</a></div></footer></div>
+  <script src="/assets/js/app.4cb7ba09.js" defer></script><script src="/assets/js/page--src-templates-post-vue.bb134615.js" defer></script>
+</body>
+</html>
